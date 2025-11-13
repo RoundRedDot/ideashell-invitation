@@ -161,10 +161,10 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
   // Calculate transform based on state and drag offset
   const getTransform = () => {
     if (isDragging) {
-      const baseTransform = cardState === 'collapsed' ? 'calc(100% - 140px)' : '0';
+      const baseTransform = cardState === 'collapsed' ? 'calc(100% - 130px)' : '0';
       return `translateY(calc(${baseTransform} - ${dragOffset}px))`;
     }
-    return cardState === 'collapsed' ? 'translateY(calc(100% - 140px))' : 'translateY(0)';
+    return cardState === 'collapsed' ? 'translateY(calc(100% - 130px))' : 'translateY(0)';
   };
 
   return (
