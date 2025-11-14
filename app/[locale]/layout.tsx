@@ -1,22 +1,5 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
-import { locales } from '@/i18n/config';
-import "../globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
-}
 
 export async function generateMetadata({
   params,
@@ -46,9 +29,17 @@ export async function generateMetadata({
   const content = metadata[locale as keyof typeof metadata] || metadata.en;
 
   return {
+    metadataBase: new URL('https://ideashell.com'),
     title: content.title,
     description: content.description,
     keywords: content.keywords,
+    alternates: {
+      canonical: `/${locale}`,
+      languages: {
+        en: '/en',
+        'zh-CN': '/zh-CN',
+      },
+    },
     openGraph: {
       title: content.ogTitle,
       description: content.ogDescription,
@@ -71,11 +62,6 @@ export async function generateMetadata({
       description: content.ogDescription,
       images: ["/og-image.jpg"],
     },
-    viewport: {
-      width: "device-width",
-      initialScale: 1,
-      maximumScale: 1,
-    },
   };
 }
 
@@ -88,21 +74,13 @@ export default async function LocaleLayout({
 }>) {
   const { locale } = await params;
 
-  // Enable static rendering
+  // Enable static rendering for the specific locale
   setRequestLocale(locale);
 
   // Load messages for the locale
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <NextIntlClientProvider messages={messages}>
-          {children}
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
   );
 }

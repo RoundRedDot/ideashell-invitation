@@ -5,8 +5,12 @@ import type { NextConfig } from "next";
 const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  reactCompiler: true
+  // Enable static HTML export so the site can be hosted on Nginx
+  output: 'export',
+  // Ensure next/image does not rely on the Next.js image optimizer
+  images: { unoptimized: true },
+  reactCompiler: true,
+  trailingSlash: true,
 };
 
 // Apply next-intl plugin first, then Sentry

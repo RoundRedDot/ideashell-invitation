@@ -2,23 +2,19 @@ import { InvitationCard } from "@/components/invitation/InvitationCard";
 import { ImageCarousel } from "@/components/invitation/ImageCarousel";
 import { ReviewsSection } from "@/components/invitation/ReviewsSection";
 import { setRequestLocale, getTranslations } from 'next-intl/server';
+import { locales } from '@/i18n/config';
 
 import Image from "next/image";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }> | { [key: string]: string | string[] | undefined };
 }
 
-export default async function Home({ params, searchParams }: PageProps) {
+export default async function Home({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
 
   const t = await getTranslations('home');
-
-  const queryParams = searchParams instanceof Promise ? await searchParams : searchParams;
-  const invitationCode = queryParams?.invite || "-";
-  const codeString = Array.isArray(invitationCode) ? invitationCode[0] : invitationCode;
 
   return (
     <div className="min-h-screen bg-[#f4f4f4] overflow-x-hidden">
@@ -73,7 +69,16 @@ export default async function Home({ params, searchParams }: PageProps) {
         </div>
       </div>
 
-      <InvitationCard invitationCode={codeString} />
+      <InvitationCard />
     </div>
   );
 }
+
+// Ensure static paths are generated for the dynamic [locale] segment
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+
+// Extra hints for static export robustness
+export const dynamic = 'force-static';
+export const dynamicParams = false;
