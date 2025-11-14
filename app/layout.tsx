@@ -22,7 +22,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ideashell.com"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://ideashell.com"),
   icons: {
     icon: [
       {
