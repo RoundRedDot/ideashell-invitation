@@ -1,0 +1,51 @@
+{
+  "home": {
+    "header": {
+      "rank": "#1",
+      "reviews": "10,000+ 五星好评",
+      "getApp": "获取应用"
+    },
+    "hero": {
+      "title": "AI 语音笔记",
+      "for": "记录",
+      "subtitle": "一切重要的事",
+      "description": "会议 / 想法 / 日记 / 学习 / 思考"
+    },
+    "footer": {
+      "copyright": "版权所有 ",
+      "company": "RoundRedDot Inc.",
+      "slogan": "一切始于一个",
+      "dot": "点。"
+    }
+  },
+  "invitation": {
+    "title": "获得 100,000 AI 点数",
+    "claimButton": "领取点数",
+    "copiedButton": "已复制！",
+    "step1": {
+      "action": "安装",
+      "description": " ideaShell 应用"
+    },
+    "step2": {
+      "description": "返回此处点击接受邀请，或在设置/我的账户页面输入邀请码。"
+    }
+  },
+  "reviews": {
+    "rating": "4.9",
+    "count": "全球 10,000+ 评论",
+    "items": [
+      {
+        "title": "日记是治愈的，珊珊太棒了！",
+        "content": "用了几天，感觉很棒，已经成为会员了。一些冲突的负面想法一旦写下来就消散了；这和仅仅录音是不同的。总的来说，珊珊真的很好！"
+      },
+      {
+        "title": "即开即用，创意的好助手！",
+        "content": "我是歌剧系的学生，平时需要记录很多即兴动作。这个实时录制功能对我来说绝对很方便！"
+      },
+      {
+        "title": "用户友好，体验出色！",
+        "content": "我是一名教师，经常需要记录课堂讨论。这个工具让我能够快速捕捉学生的见解，界面简洁，操作简单，完全符合我的需求！"
+      }
+    ]
+  }
+}

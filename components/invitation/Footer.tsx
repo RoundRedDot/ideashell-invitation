@@ -5,7 +5,5 @@ interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ className = '' }) => {
-  return (
-
-  );
+  return null;
 };

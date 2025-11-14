@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { OneIconSVG, TwoIconSVG } from "../ui/icones";
+import { useTranslations } from 'next-intl';
 
 interface InvitationCardProps {
   invitationCode?: string;
@@ -11,11 +12,13 @@ interface InvitationCardProps {
 type CardState = 'expanded' | 'collapsed';
 
 export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode = "ER56Y", className = "" }) => {
+  const t = useTranslations('invitation');
+
   const [copied, setCopied] = useState(false);
   const [cardState, setCardState] = useState<CardState>('expanded');
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState(0);
-  
+
   // Refs for tracking scroll and drag state
   const touchStartY = useRef<number>(0);
   const touchCurrentY = useRef<number>(0);
@@ -207,7 +210,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
               className="flex flex-col h-[18px] justify-center text-[#ff4d23] text-[15px] font-bold w-full"
               style={{ fontFamily: "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif" }}
             >
-              <p className="leading-normal whitespace-pre-wrap">Receive 100,000 AI Credits</p>
+              <p className="leading-normal whitespace-pre-wrap">{t('title')}</p>
             </div>
             <div className="flex items-center justify-between w-full">
               <div className="flex gap-2 items-center">
@@ -226,7 +229,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
                   className="capitalize flex flex-col justify-center text-[13px] text-center text-white font-bold whitespace-nowrap"
                   style={{ fontFamily: "'SF Pro', -apple-system, BlinkMacSystemFont, sans-serif" }}
                 >
-                  <p className="leading-normal">{copied ? "Copied!" : "Claim Credits"}</p>
+                  <p className="leading-normal">{copied ? t('copiedButton') : t('claimButton')}</p>
                 </div>
               </button>
             </div>
@@ -248,9 +251,9 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
                 >
                   <p className="leading-normal whitespace-pre-wrap">
                     <span className="underline decoration-solid [text-decoration-skip-ink:none] [text-underline-position:from-font]">
-                      Install
+                      {t('step1.action')}
                     </span>
-                    <span>{` ideaShell App`}</span>
+                    <span>{t('step1.description')}</span>
                   </p>
                 </div>
               </div>
@@ -266,7 +269,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
                   style={{ fontFamily: "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif" }}
                 >
                   <p className="leading-normal whitespace-pre-wrap">
-                    Back here and press Accept Invitation or enter the invitation code on the Settings/My Account page.
+                    {t('step2.description')}
                   </p>
                 </div>
               </div>

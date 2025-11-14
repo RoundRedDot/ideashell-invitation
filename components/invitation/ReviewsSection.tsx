@@ -1,30 +1,15 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import { LeftDecorationIconSVG, RightDecorationIconSVG, ReviewCardTailSVG } from "@/components/ui/icones";
+import { useTranslations } from 'next-intl';
 
 interface ReviewCardProps {
   title: string;
   content: string;
   stars?: number;
 }
-
-const reviews = [
-  {
-    title: "Journaling is healing, Shanshan is amazing!",
-    content:
-      "After using it for a few days, I feel great and have become a member. Some of the conflicting negative thoughts just seem to dissipate once I write them down; it's different from just recording audio. Overall, Shanshan is really nice!",
-  },
-  {
-    title: "Ready to use right away, a great assistant for creativity!",
-    content:
-      "I'm a student from opera department and usually need to record many improvised movements. This real-time recording feature will definitely be very convenient for me!",
-  },
-  {
-    title: "User-friendly, excellent experience!",
-    content:
-      "I am a teacher and often need to record classroom discussions. This tool allows me to quickly capture students' insights, with a clean interface and simple operation, making it perfect for my needs!",
-  },
-];
 
 const STAR_ICON =
   "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTYgMUw3LjU0NSA0LjEzTDExIDQuNjM1TDguNSA3LjA3TDkuMDkgMTAuNUw2IDguODdMMi45MSAxMC41TDMuNSA3LjA3TDEgNC42MzVMNC40NTUgNC4xM0w2IDFaIiBmaWxsPSIjRkZDMjI2Ii8+Cjwvc3ZnPg==";
@@ -51,6 +36,11 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ title, content, stars = 5 }) =>
 };
 
 export const ReviewsSection = () => {
+  const t = useTranslations('reviews');
+
+  // Get reviews array from translations
+  const reviews = t.raw('items') as Array<{ title: string; content: string }>;
+
   return (
     <div className="space-y-12">
       <div className="flex items-center justify-center gap-8">
@@ -64,9 +54,9 @@ export const ReviewsSection = () => {
               <Image key={i} src={STAR_ICON} alt="star" width={12} height={12} className="block" />
             ))}
           </div>
-          <div className="text-[28px] font-bold text-[#343434] leading-none">4.9</div>
+          <div className="text-[28px] font-bold text-[#343434] leading-none">{t('rating')}</div>
           <div className="text-[13px] font-medium text-[#343434] text-center leading-tight uppercase max-w-[110px]">
-            10,000+ Global Reviews
+            {t('count')}
           </div>
         </div>
 

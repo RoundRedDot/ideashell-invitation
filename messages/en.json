@@ -1,0 +1,51 @@
+{
+  "home": {
+    "header": {
+      "rank": "#1",
+      "reviews": "10,000+ 5-Star reviews",
+      "getApp": "Get App"
+    },
+    "hero": {
+      "title": "AI Voice Notes",
+      "for": "for",
+      "subtitle": "everything that matters",
+      "description": "Meetings / ideas / Journals / Studying / Thoughts"
+    },
+    "footer": {
+      "copyright": "All rights reserved. ",
+      "company": "RoundRedDot Inc.",
+      "slogan": "Everything starts from a ",
+      "dot": "Dot."
+    }
+  },
+  "invitation": {
+    "title": "Receive 100,000 AI Credits",
+    "claimButton": "Claim Credits",
+    "copiedButton": "Copied!",
+    "step1": {
+      "action": "Install",
+      "description": " ideaShell App"
+    },
+    "step2": {
+      "description": "Back here and press Accept Invitation or enter the invitation code on the Settings/My Account page."
+    }
+  },
+  "reviews": {
+    "rating": "4.9",
+    "count": "10,000+ Global Reviews",
+    "items": [
+      {
+        "title": "Journaling is healing, Shanshan is amazing!",
+        "content": "After using it for a few days, I feel great and have become a member. Some of the conflicting negative thoughts just seem to dissipate once I write them down; it's different from just recording audio. Overall, Shanshan is really nice!"
+      },
+      {
+        "title": "Ready to use right away, a great assistant for creativity!",
+        "content": "I'm a student from opera department and usually need to record many improvised movements. This real-time recording feature will definitely be very convenient for me!"
+      },
+      {
+        "title": "User-friendly, excellent experience!",
+        "content": "I am a teacher and often need to record classroom discussions. This tool allows me to quickly capture students' insights, with a clean interface and simple operation, making it perfect for my needs!"
+      }
+    ]
+  }
+}
