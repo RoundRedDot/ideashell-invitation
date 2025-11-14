@@ -1,0 +1,51 @@
+{
+  "home": {
+    "header": {
+      "rank": "N°1",
+      "reviews": "Plus de 10 000 avis 5 étoiles",
+      "getApp": "Télécharger l'app"
+    },
+    "hero": {
+      "title": "Notes vocales IA",
+      "for": "pour",
+      "subtitle": "tout ce qui compte",
+      "description": "Réunions / idées / Journaux / Études / Pensées"
+    },
+    "footer": {
+      "copyright": "Tous droits réservés.",
+      "company": "RoundRedDot Inc.",
+      "slogan": "Tout commence par un",
+      "dot": "point."
+    }
+  },
+  "invitation": {
+    "title": "Recevez 100 000 crédits IA",
+    "claimButton": "Réclamer les crédits",
+    "copiedButton": "Copié !",
+    "step1": {
+      "action": "Installer",
+      "description": " l'app ideaShell"
+    },
+    "step2": {
+      "description": "Revenez ici et appuyez sur \"Accepter l'invitation\" ou saisissez le code d'invitation dans Paramètres / Mon compte."
+    }
+  },
+  "reviews": {
+    "rating": "4.9",
+    "count": "Plus de 10 000 avis dans le monde",
+    "items": [
+      {
+        "title": "Tenir un journal est thérapeutique, Shanshan est incroyable !",
+        "content": "Après quelques jours d'utilisation, je me sens très bien et je suis devenu membre. Certains sentiments négatifs disparaissent simplement en les écrivant ; c'est différent de l'enregistrement audio. Globalement, Shanshan est vraiment géniale !"
+      },
+      {
+        "title": "Prête à l'emploi, une excellente aide à la créativité !",
+        "content": "Je suis étudiant en opéra et j'ai souvent besoin d'enregistrer des mouvements improvisés. Cette fonction d'enregistrement en temps réel est très pratique pour moi !"
+      },
+      {
+        "title": "Facile à utiliser, expérience excellente !",
+        "content": "Je suis enseignant et j'enregistre souvent les discussions en classe. Cet outil me permet de capturer rapidement les idées des élèves, avec une interface claire et une utilisation simple — parfait pour mes besoins !"
+      }
+    ]
+  }
+}

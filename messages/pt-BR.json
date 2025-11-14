@@ -1,0 +1,51 @@
+{
+  "home": {
+    "header": {
+      "rank": "#1",
+      "reviews": "Mais de 10.000 avaliações 5 estrelas",
+      "getApp": "Baixar App"
+    },
+    "hero": {
+      "title": "Notas de voz com IA",
+      "for": "para",
+      "subtitle": "tudo o que importa",
+      "description": "Reuniões / ideias / Diários / Estudos / Pensamentos"
+    },
+    "footer": {
+      "copyright": "Todos os direitos reservados.",
+      "company": "RoundRedDot Inc.",
+      "slogan": "Tudo começa com um",
+      "dot": "ponto."
+    }
+  },
+  "invitation": {
+    "title": "Receba 100.000 Créditos de IA",
+    "claimButton": "Resgatar Créditos",
+    "copiedButton": "Copiado!",
+    "step1": {
+      "action": "Instalar",
+      "description": " o app ideaShell"
+    },
+    "step2": {
+      "description": "Volte aqui e pressione \"Aceitar Convite\" ou insira o código na página de Configurações/Minha Conta."
+    }
+  },
+  "reviews": {
+    "rating": "4.9",
+    "count": "Mais de 10.000 avaliações globais",
+    "items": [
+      {
+        "title": "Escrever é terapêutico, Shanshan é incrível!",
+        "content": "Depois de usar por alguns dias, me senti ótimo e me tornei membro. Alguns pensamentos negativos desaparecem quando os escrevo — é diferente de apenas gravar áudio. Shanshan é realmente ótima!"
+      },
+      {
+        "title": "Pronta para usar, ótima para criatividade!",
+        "content": "Sou estudante de ópera e preciso gravar muitos movimentos improvisados. Esse recurso de gravação em tempo real é muito conveniente para mim!"
+      },
+      {
+        "title": "Fácil de usar, experiência excelente!",
+        "content": "Sou professor e preciso gravar discussões em sala de aula. Esta ferramenta me permite capturar rapidamente as ideias dos alunos, com uma interface limpa e simples. Perfeita para minhas necessidades!"
+      }
+    ]
+  }
+}

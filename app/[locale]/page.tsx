@@ -4,8 +4,8 @@ import { ReviewsSection } from "@/components/invitation/ReviewsSection";
 import { AppDownloadHeader } from "@/components/invitation/AppDownloadHeader";
 import { ConditionalWrapper } from "@/components/invitation/ConditionalWrapper";
 import { setRequestLocale, getTranslations } from "next-intl/server";
+import LanguageSelector from "@/components/LanguageSelector";
 import { locales } from "@/i18n/config";
-
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -52,6 +52,7 @@ export default async function Home({ params }: PageProps) {
               </p>
             </div>
           </div>
+          <LanguageSelector currentLocale={locale} />
         </div>
       </div>
 

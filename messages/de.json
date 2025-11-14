@@ -1,0 +1,51 @@
+{
+  "home": {
+    "header": {
+      "rank": "#1",
+      "reviews": "10.000+ 5-Sterne-Bewertungen",
+      "getApp": "App herunterladen"
+    },
+    "hero": {
+      "title": "KI-Sprachnotizen",
+      "for": "für",
+      "subtitle": "alles, was zählt",
+      "description": "Meetings / Ideen / Tagebücher / Lernen / Gedanken"
+    },
+    "footer": {
+      "copyright": "Alle Rechte vorbehalten.",
+      "company": "RoundRedDot Inc.",
+      "slogan": "Alles beginnt mit einem",
+      "dot": "Punkt."
+    }
+  },
+  "invitation": {
+    "title": "Erhalte 100.000 KI-Credits",
+    "claimButton": "Credits einlösen",
+    "copiedButton": "Kopiert!",
+    "step1": {
+      "action": "Installieren",
+      "description": " ideaShell App"
+    },
+    "step2": {
+      "description": "Kehre hierher zurück und klicke auf \"Einladung annehmen\" oder gib den Einladungscode unter Einstellungen/Mein Konto ein."
+    }
+  },
+  "reviews": {
+    "rating": "4.9",
+    "count": "10.000+ globale Bewertungen",
+    "items": [
+      {
+        "title": "Tagebuchschreiben heilt, Shanshan ist großartig!",
+        "content": "Nach ein paar Tagen Nutzung fühle ich mich großartig und bin Mitglied geworden. Einige widersprüchliche, negative Gedanken verschwinden einfach, wenn ich sie aufschreibe – es ist ganz anders als nur eine Audioaufnahme. Insgesamt ist Shanshan wirklich toll!"
+      },
+      {
+        "title": "Sofort einsatzbereit, toll für Kreativität!",
+        "content": "Ich bin Opernstudent und muss oft improvisierte Bewegungen aufzeichnen. Diese Echtzeit-Aufnahmefunktion ist wirklich praktisch für mich!"
+      },
+      {
+        "title": "Benutzerfreundlich, tolle Erfahrung!",
+        "content": "Ich bin Lehrer und muss häufig Klassendiskussionen aufnehmen. Dieses Tool ermöglicht es mir, schnell die Gedanken der Schüler festzuhalten, mit einer klaren Oberfläche und einfacher Bedienung – perfekt für meine Bedürfnisse!"
+      }
+    ]
+  }
+}
