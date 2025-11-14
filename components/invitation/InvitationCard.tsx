@@ -11,7 +11,7 @@ interface InvitationCardProps {
 
 type CardState = 'expanded' | 'collapsed';
 
-export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode = "ER56Y", className = "" }) => {
+export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode = "-", className = "" }) => {
   const t = useTranslations('invitation');
 
   const [copied, setCopied] = useState(false);

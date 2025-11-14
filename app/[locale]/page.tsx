@@ -12,17 +12,12 @@ interface PageProps {
 
 export default async function Home({ params, searchParams }: PageProps) {
   const { locale } = await params;
-
-  // Enable static rendering
   setRequestLocale(locale);
 
   const t = await getTranslations('home');
 
-  // Handle both sync and async searchParams (Next.js 15 compatibility)
   const queryParams = searchParams instanceof Promise ? await searchParams : searchParams;
-
-  // Get invitation code from URL parameters (?code=XXX or ?invite=XXX)
-  const invitationCode = queryParams?.code || queryParams?.invite || "ER56Y";
+  const invitationCode = queryParams?.invite || "-";
   const codeString = Array.isArray(invitationCode) ? invitationCode[0] : invitationCode;
 
   return (
