@@ -1,18 +1,22 @@
 "use client";
 
 import { useEffect } from "react";
+import { getPreferredLocale } from "@/lib/locale-detector";
 
-// Fallback client-side locale redirect for static hosting.
-// Nginx should handle '/' -> '/en' (or '/zh-CN'), this is a safety net.
 export default function RootRedirect() {
   useEffect(() => {
     try {
       const { search } = window.location;
       const qs = search || "";
-      const langs = typeof navigator !== "undefined" ? navigator.languages || [navigator.language] : [];
-      const preferZh = langs.some((l) => l && l.toLowerCase().startsWith("zh"));
-      const target = preferZh ? "/zh-CN" : "/en";
-      window.location.replace(`${target}${qs}`);
+
+      // Use the new locale detector that prioritizes User-Agent language
+      // This will check:
+      // 1. User-Agent Language header (ideaShell app)
+      // 2. navigator.languages (browser preference)
+      // 3. Default to 'en'
+      const preferredLocale = getPreferredLocale();
+
+      window.location.replace(`/${preferredLocale}${qs}`);
     } catch (e) {
       window.location.replace(`/en${window.location.search || ""}`);
     }
