@@ -26,9 +26,7 @@ export default function LanguageSelector({ currentLocale }: { currentLocale: str
         <SelectValue asChild>
           <div className="flex items-center gap-1.5">
             <LanguageIcon className="w-4 h-4" />
-            <span className="text-xs font-medium text-gray-700 hidden sm:inline">
-              {localeLabels[currentLocale as keyof typeof localeLabels]}
-            </span>
+            {localeLabels[currentLocale as keyof typeof localeLabels]}
           </div>
         </SelectValue>
       </SelectTrigger>

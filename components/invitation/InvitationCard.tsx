@@ -18,7 +18,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
   const [urlCode] = useState<string>(() => {
     try {
       const qs = new URLSearchParams(window.location.search);
-      return qs.get("invite") || "";
+      return qs.get("code") || "";
     } catch {
       return "";
     }
