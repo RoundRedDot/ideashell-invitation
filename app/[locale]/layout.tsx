@@ -1,5 +1,6 @@
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
+import { getLocalePath, getAssetPath, getCanonicalUrl } from "@/lib/path-utils";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -79,32 +80,34 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     "de": "de_DE"
   };
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ideashell.com";
+
   return {
-    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://ideashell.com"),
+    metadataBase: new URL(siteUrl),
     title: content.title,
     description: content.description,
     keywords: content.keywords,
     alternates: {
-      canonical: `/${locale}`,
+      canonical: getCanonicalUrl(`/${locale}`, siteUrl),
       languages: {
-        en: "/en",
-        "zh-CN": "/zh-CN",
-        "zh-TW": "/zh-TW",
-        ja: "/ja",
-        es: "/es",
-        "pt-BR": "/pt-BR",
-        fr: "/fr",
-        de: "/de",
+        en: getLocalePath("en"),
+        "zh-CN": getLocalePath("zh-CN"),
+        "zh-TW": getLocalePath("zh-TW"),
+        ja: getLocalePath("ja"),
+        es: getLocalePath("es"),
+        "pt-BR": getLocalePath("pt-BR"),
+        fr: getLocalePath("fr"),
+        de: getLocalePath("de"),
       },
     },
     openGraph: {
       title: content.ogTitle,
       description: content.ogDescription,
-      url: "https://ideashell.com",
+      url: getCanonicalUrl(`/${locale}`, siteUrl),
       siteName: "ideaShell",
       images: [
         {
-          url: "/og-image.jpg",
+          url: getAssetPath("/og-image.jpg"),
           width: 1200,
           height: 630,
           alt: content.ogTitle,
@@ -117,7 +120,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       card: "summary_large_image",
       title: content.ogTitle,
       description: content.ogDescription,
-      images: ["/og-image.jpg"],
+      images: [getAssetPath("/og-image.jpg")],
     },
   };
 }

@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { getPreferredLocale } from "@/lib/locale-detector";
+import { getLocalePath } from "@/lib/path-utils";
 
 export default function RootRedirect() {
   useEffect(() => {
@@ -16,9 +17,12 @@ export default function RootRedirect() {
       // 3. Default to 'en'
       const preferredLocale = getPreferredLocale();
 
-      window.location.replace(`/${preferredLocale}${qs}`);
+      const targetPath = getLocalePath(preferredLocale);
+
+      window.location.replace(`${targetPath}${qs}`);
     } catch (e) {
-      window.location.replace(`/en${window.location.search || ""}`);
+      const fallbackPath = getLocalePath('en');
+      window.location.replace(`${fallbackPath}${window.location.search || ""}`);
     }
   }, []);
 

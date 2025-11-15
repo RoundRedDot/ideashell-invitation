@@ -2,8 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel";
+import { getAssetPath } from "@/lib/path-utils";
 
-const CAROUSEL_IMAGES = ["/carousel-1.jpeg", "/carousel-2.jpeg", "/carousel-3.jpeg"];
+const CAROUSEL_IMAGES = [
+  getAssetPath("/carousel-1.jpeg"),
+  getAssetPath("/carousel-2.jpeg"),
+  getAssetPath("/carousel-3.jpeg"),
+];
 
 export const ImageCarousel = () => {
   const [api, setApi] = useState<CarouselApi>();

@@ -4,7 +4,19 @@ import type { NextConfig } from "next";
 
 const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 
+// Configure base path for subpath deployment
+// Use empty string for root deployment (development)
+// Use '/user/invite' for production deployment
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '/user/invite';
+
 const nextConfig: NextConfig = {
+  // Configure base path for deployment at subpath (e.g., /user/invite/)
+  // This automatically prefixes all Next.js managed routes and assets
+  basePath: basePath === '/' ? undefined : basePath,
+
+  // Asset prefix ensures static assets are served from correct path
+  assetPrefix: basePath === '/' ? undefined : basePath,
+
   // Enable static HTML export so the site can be hosted on Nginx
   output: 'export',
   // Ensure next/image does not rely on the Next.js image optimizer

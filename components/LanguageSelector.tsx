@@ -4,16 +4,14 @@ import { usePathname, useRouter } from "next/navigation";
 import { locales, localeLabels } from "@/i18n/config";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { LanguageIcon } from "./ui/icones";
+import { replaceLocaleInPath } from "@/lib/path-utils";
 
 export default function LanguageSelector({ currentLocale }: { currentLocale: string }) {
   const pathname = usePathname();
   const router = useRouter();
 
   const handleLanguageChange = (newLocale: string) => {
-    // Get the current path without the locale
-    const pathSegments = pathname.split("/");
-    pathSegments[1] = newLocale; // Replace the locale segment
-    const newPath = pathSegments.join("/");
+    const newPath = replaceLocaleInPath(pathname, newLocale);
 
     // Preserve query parameters
     const queryString = window.location.search;

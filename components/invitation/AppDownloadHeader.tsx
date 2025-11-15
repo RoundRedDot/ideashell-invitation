@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
+import { getAssetPath } from "@/lib/path-utils";
 
 export const AppDownloadHeader = async () => {
   const t = await getTranslations("home");
@@ -8,7 +9,7 @@ export const AppDownloadHeader = async () => {
     <div className="flex items-center justify-between w-full">
       <div className="flex items-center gap-2">
         <div className="w-12 h-12 overflow-hidden">
-          <Image src="/ideashell.png" width={48} height={48} alt="ideaShell" className="w-full h-full object-cover" />
+          <Image src={getAssetPath("/ideashell.png")} width={48} height={48} alt="ideaShell" className="w-full h-full object-cover" />
         </div>
         <div className="flex flex-col gap-1">
           <div className="text-base font-bold text-stone-900">ideaShell</div>
