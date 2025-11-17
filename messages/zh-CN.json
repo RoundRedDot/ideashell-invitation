@@ -32,7 +32,8 @@
   },
   "reviews": {
     "rating": "4.9",
-    "count": "10,000+ 条全球评价",
+    "countNumber": "10,000+ 条",
+    "countDescription": "全球评价",
     "items": [
       {
         "title": "写日记就是治愈，姗姗太棒了！",

@@ -32,7 +32,8 @@
   },
   "reviews": {
     "rating": "4.9",
-    "count": "Plus de 10 000 avis dans le monde",
+    "countNumber": "10 000+",
+    "countDescription": "Avis dans le monde entier",
     "items": [
       {
         "title": "Tenir un journal est thérapeutique, Shanshan est incroyable !",

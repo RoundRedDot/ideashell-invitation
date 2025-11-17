@@ -32,7 +32,8 @@
   },
   "reviews": {
     "rating": "4.9",
-    "count": "10.000+ globale Bewertungen",
+    "countNumber": "10.000+",
+    "countDescription": "Globale Bewertungen",
     "items": [
       {
         "title": "Tagebuchschreiben heilt, Shanshan ist großartig!",

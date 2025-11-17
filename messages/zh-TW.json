@@ -32,7 +32,8 @@
   },
   "reviews": {
     "rating": "4.9",
-    "count": "10,000+ 則全球評價",
+    "countNumber": "10,000+ 條",
+    "countDescription": "全球評價",
     "items": [
       {
         "title": "寫日記就是療癒，姍姍超棒！",

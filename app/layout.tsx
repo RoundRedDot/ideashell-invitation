@@ -36,10 +36,19 @@ export const metadata: Metadata = {
     ],
     apple: "https://framerusercontent.com/images/LVWyojf25qaf4cNwCGXerPi8wg.png",
   },
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#F4F4F4" },
+    { media: "(prefers-color-scheme: dark)", color: "#1E1E1E" },
+  ],
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+  },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
+  viewportFit: "cover",
 };

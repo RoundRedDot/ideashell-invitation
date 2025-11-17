@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { OneIconSVG, TwoIconSVG } from "../ui/icones";
 import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 
 interface InvitationCardProps {
   invitationCode?: string;
@@ -14,7 +15,6 @@ type CardState = "expanded" | "collapsed";
 export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode = "-", className = "" }) => {
   const t = useTranslations("invitation");
 
-  const [copied, setCopied] = useState(false);
   const [urlCode] = useState<string>(() => {
     try {
       const qs = new URLSearchParams(window.location.search);
@@ -37,8 +37,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
 
   const handleClaimCredits = () => {
     navigator.clipboard.writeText(resolvedCode).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      toast.success(t("copiedButton"), { position: "top-center", className: "bg-[#1c1917]! text-white!" });
     });
   };
 
@@ -171,7 +170,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
       const baseTransform = cardState === "collapsed" ? "calc(100% - 130px)" : "0";
       return `translateY(calc(${baseTransform} - ${dragOffset}px))`;
     }
-    return cardState === "collapsed" ? "translateY(calc(100% - 130px))" : "translateY(0)";
+    return cardState === "collapsed" ? "translateY(calc(100% - 70px))" : "translateY(0)";
   };
 
   return (
@@ -180,7 +179,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
       className={`fixed bottom-0 left-0 right-0 z-50 flex justify-center ${className}`}
       style={{
         maxWidth: "428px",
-        margin: "0 auto",
+        margin: "0 16px",
       }}
     >
       <div
@@ -203,7 +202,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
           onTouchEnd={handleTouchEnd}
           onMouseDown={handleMouseDown}
         >
-          <div className="w-9 h-[5px] bg-[rgba(0,0,0,0.3)] rounded-full mx-auto" />
+          <div className="w-9 h-[5px] mx-auto bg-white/60 rounded-[100px]" />
         </div>
 
         <div className="px-4 pb-4 flex flex-col gap-4">
@@ -220,18 +219,18 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
                   className="flex flex-col justify-center text-2xl text-black font-semibold whitespace-nowrap"
                   style={{ fontFamily: "'New York', 'Times New Roman', serif" }}
                 >
-                  <p className="leading-normal">{resolvedCode}</p>
+                  <p className="leading-normal" onClick={handleClaimCredits}>
+                    {resolvedCode}
+                  </p>
                 </div>
               </div>
-              <button
-                onClick={handleClaimCredits}
-                className="bg-[#1e1e1e] flex gap-2.5 h-8 items-center justify-center px-4 py-0 rounded-full overflow-clip"
-              >
+              <button className="bg-[#1e1e1e] flex gap-2.5 h-8 items-center justify-center px-4 py-0 rounded-full overflow-clip">
                 <div
                   className="capitalize flex flex-col justify-center text-[13px] text-center text-white font-bold whitespace-nowrap"
                   style={{ fontFamily: "'SF Pro', -apple-system, BlinkMacSystemFont, sans-serif" }}
                 >
-                  <p className="leading-normal">{copied ? t("copiedButton") : t("claimButton")}</p>
+                  {/* <p className="leading-normal">{copied ? t("copiedButton") : t("claimButton")}</p> */}
+                  <p className="leading-normal">{t("claimButton")}</p>
                 </div>
               </button>
             </div>

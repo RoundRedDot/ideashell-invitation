@@ -1,6 +1,7 @@
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { getLocalePath, getAssetPath, getCanonicalUrl } from "@/lib/path-utils";
+import { Toaster } from "@/components/ui/sonner";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -31,35 +32,40 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     },
     ja: {
       title: "ideaShell - 大切なすべてのためのAIボイスノート",
-      description: "ideaShellに参加して100,000 AIクレジットを受け取りましょう！10,000以上の5つ星レビューを誇る#1 AIボイスノートアプリ。会議、アイデア、日記、学習、思考に最適です。",
+      description:
+        "ideaShellに参加して100,000 AIクレジットを受け取りましょう！10,000以上の5つ星レビューを誇る#1 AIボイスノートアプリ。会議、アイデア、日記、学習、思考に最適です。",
       keywords: "AIボイスノート, 音声録音, 会議メモ, 日記アプリ, 学習ノート, ideaShell",
       ogTitle: "ideaShell - AIボイスノート",
       ogDescription: "ideaShellに参加して100,000 AIクレジットを受け取りましょう！",
     },
     es: {
       title: "ideaShell - Notas de Voz con IA para Todo lo que Importa",
-      description: "¡Únete a ideaShell y recibe 100,000 Créditos de IA! La aplicación #1 de notas de voz con IA con más de 10,000 reseñas de 5 estrellas. Perfecta para reuniones, ideas, diarios, estudio y pensamientos.",
+      description:
+        "¡Únete a ideaShell y recibe 100,000 Créditos de IA! La aplicación #1 de notas de voz con IA con más de 10,000 reseñas de 5 estrellas. Perfecta para reuniones, ideas, diarios, estudio y pensamientos.",
       keywords: "notas de voz con IA, grabación de voz, notas de reuniones, aplicación de diario, notas de estudio, ideaShell",
       ogTitle: "ideaShell - Notas de Voz con IA",
       ogDescription: "¡Únete a ideaShell y recibe 100,000 Créditos de IA!",
     },
     "pt-BR": {
       title: "ideaShell - Notas de Voz com IA para Tudo o que Importa",
-      description: "Junte-se ao ideaShell e receba 100.000 Créditos de IA! O aplicativo #1 de notas de voz com IA com mais de 10.000 avaliações 5 estrelas. Perfeito para reuniões, ideias, diários, estudos e pensamentos.",
+      description:
+        "Junte-se ao ideaShell e receba 100.000 Créditos de IA! O aplicativo #1 de notas de voz com IA com mais de 10.000 avaliações 5 estrelas. Perfeito para reuniões, ideias, diários, estudos e pensamentos.",
       keywords: "notas de voz com IA, gravação de voz, notas de reunião, aplicativo de diário, notas de estudo, ideaShell",
       ogTitle: "ideaShell - Notas de Voz com IA",
       ogDescription: "Junte-se ao ideaShell e receba 100.000 Créditos de IA!",
     },
     fr: {
       title: "ideaShell - Notes Vocales IA pour Tout ce qui Compte",
-      description: "Rejoignez ideaShell et recevez 100 000 Crédits IA ! L'application #1 de notes vocales IA avec plus de 10 000 avis 5 étoiles. Parfaite pour les réunions, les idées, les journaux, les études et les pensées.",
+      description:
+        "Rejoignez ideaShell et recevez 100 000 Crédits IA ! L'application #1 de notes vocales IA avec plus de 10 000 avis 5 étoiles. Parfaite pour les réunions, les idées, les journaux, les études et les pensées.",
       keywords: "notes vocales IA, enregistrement vocal, notes de réunion, application journal, notes d'étude, ideaShell",
       ogTitle: "ideaShell - Notes Vocales IA",
       ogDescription: "Rejoignez ideaShell et recevez 100 000 Crédits IA !",
     },
     de: {
       title: "ideaShell - KI-Sprachnotizen für Alles was Zählt",
-      description: "Treten Sie ideaShell bei und erhalten Sie 100.000 KI-Credits! Die #1 KI-Sprachnotizen-App mit über 10.000 5-Sterne-Bewertungen. Perfekt für Meetings, Ideen, Tagebücher, Lernen und Gedanken.",
+      description:
+        "Treten Sie ideaShell bei und erhalten Sie 100.000 KI-Credits! Die #1 KI-Sprachnotizen-App mit über 10.000 5-Sterne-Bewertungen. Perfekt für Meetings, Ideen, Tagebücher, Lernen und Gedanken.",
       keywords: "KI-Sprachnotizen, Sprachaufnahme, Meeting-Notizen, Tagebuch-App, Lernnotizen, ideaShell",
       ogTitle: "ideaShell - KI-Sprachnotizen",
       ogDescription: "Treten Sie ideaShell bei und erhalten Sie 100.000 KI-Credits!",
@@ -70,14 +76,14 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
   // Map locales to OpenGraph locale format
   const ogLocaleMap: Record<string, string> = {
-    "en": "en_US",
+    en: "en_US",
     "zh-CN": "zh_CN",
     "zh-TW": "zh_TW",
-    "ja": "ja_JP",
-    "es": "es_ES",
+    ja: "ja_JP",
+    es: "es_ES",
     "pt-BR": "pt_BR",
-    "fr": "fr_FR",
-    "de": "de_DE"
+    fr: "fr_FR",
+    de: "de_DE",
   };
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ideashell.com";
@@ -140,5 +146,10 @@ export default async function LocaleLayout({
   // Load messages for the locale
   const messages = await getMessages();
 
-  return <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>;
+  return (
+    <NextIntlClientProvider messages={messages}>
+      {children}
+      <Toaster />
+    </NextIntlClientProvider>
+  );
 }

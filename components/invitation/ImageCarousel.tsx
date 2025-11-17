@@ -59,9 +59,9 @@ export const ImageCarousel = () => {
         </CarouselContent>
       </Carousel>
 
-      <div className="flex gap-1">
+      <div className="flex gap-3">
         {CAROUSEL_IMAGES.map((_, index) => (
-          <div key={index} className={`h-2 rounded-full transition-all ${index === current ? "w-2 bg-[#1e1e1e]" : "w-2 bg-[#d9d9d9]"}`} />
+          <div key={index} className={`size-2 rounded-full transition-all ${index === current ? "bg-black/70" : "bg-black/20"}`} />
         ))}
       </div>
     </div>

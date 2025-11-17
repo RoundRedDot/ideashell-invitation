@@ -126,5 +126,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    /* Keep Safari status bar color aligned with page background */
+    background-color: #F4F4F4;
   }
 }

@@ -22,9 +22,9 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ title, content, stars = 5 }) =>
         <p className="text-[14px] text-[#808080] leading-normal">{content}</p>
       </div>
 
-      <div className="flex gap-0.5">
+      <div className="flex">
         {Array.from({ length: stars }).map((_, i) => (
-          <Image key={i} src={STAR_ICON} alt="star" width={12} height={12} className="block" />
+          <Image key={i} src={STAR_ICON} alt="star" width={16} height={16} className="block" />
         ))}
       </div>
 
@@ -43,20 +43,23 @@ export const ReviewsSection = () => {
 
   return (
     <div className="space-y-12">
-      <div className="flex items-center justify-center gap-8">
+      <div className="flex items-center justify-center gap-3">
         <div className="w-[23px] h-[48px] shrink-0">
           <LeftDecorationIconSVG className="w-full h-full" />
         </div>
 
         <div className="flex flex-col items-center gap-2">
-          <div className="flex gap-0.5">
+          <div className="flex">
             {Array.from({ length: 5 }).map((_, i) => (
-              <Image key={i} src={STAR_ICON} alt="star" width={12} height={12} className="block" />
+              <Image key={i} src={STAR_ICON} alt="star" width={18} height={18} className="block" />
             ))}
           </div>
           <div className="text-[28px] font-bold text-[#343434] leading-none">{t('rating')}</div>
           <div className="text-[13px] font-medium text-[#343434] text-center leading-tight uppercase max-w-[110px]">
-            {t('count')}
+            {t('countNumber')}
+          </div>
+          <div className="text-[13px] font-medium text-[#343434] text-center leading-tight uppercase">
+            {t('countDescription')}
           </div>
         </div>
 

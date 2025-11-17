@@ -32,7 +32,8 @@
   },
   "reviews": {
     "rating": "4.9",
-    "count": "Mais de 10.000 avaliações globais",
+    "countNumber": "10.000+",
+    "countDescription": "Avaliações globais",
     "items": [
       {
         "title": "Escrever é terapêutico, Shanshan é incrível!",

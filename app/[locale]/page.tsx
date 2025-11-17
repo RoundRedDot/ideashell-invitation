@@ -47,8 +47,8 @@ export default async function Home({ params }: PageProps) {
             </div>
             <div className="text-[#8d8d8d]">
               <p className="leading-normal">
-                <span className="text-[#808080]">{t("footer.slogan")}</span>
-                <span className="font-bold text-[#ff0000]">{t("footer.dot")}</span>
+                <span className="text-[#808080]">Everything starts from a </span>
+                <span className="font-bold text-[#ff0000]">Dot.</span>
               </p>
             </div>
           </div>
