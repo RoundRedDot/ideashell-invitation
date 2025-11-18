@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { getAssetPath } from "@/lib/path-utils";
+import { AppDownloadButton } from "./AppDownloadButton";
 
 export const AppDownloadHeader = async () => {
   const t = await getTranslations("home");
@@ -20,9 +21,9 @@ export const AppDownloadHeader = async () => {
           </div>
         </div>
       </div>
-      <button className="flex items-center gap-2 px-4 py-2 h-8 bg-[#ff4d23] rounded-full">
+      <AppDownloadButton className="flex items-center gap-2 px-4 py-2 h-8 bg-[#ff4d23] rounded-full">
         <span className="text-white text-xs font-bold">{t("header.getApp")}</span>
-      </button>
+      </AppDownloadButton>
     </div>
   );
 };

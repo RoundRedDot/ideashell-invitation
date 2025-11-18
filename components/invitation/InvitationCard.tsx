@@ -4,6 +4,8 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { OneIconSVG, TwoIconSVG } from "../ui/icones";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import { useAppLauncher } from "@/hooks/useAppLauncher";
+import { useAppStore } from "@/hooks/useAppStore";
 
 interface InvitationCardProps {
   invitationCode?: string;
@@ -19,9 +21,6 @@ const DRAG_VELOCITY_BREAKPOINT = 0.5;
 const FAST_THRESHOLD = 50;
 const SLOW_THRESHOLD = 80;
 const COLLAPSED_TRANSLATE = `100% - ${COLLAPSED_VISIBLE_HEIGHT}px`;
-const APP_DEEPLINK_URL = process.env.NEXT_PUBLIC_APP_DEEPLINK_URL || "";
-const IOS_STORE_URL = process.env.NEXT_PUBLIC_APP_IOS_STORE_URL || "";
-const ANDROID_STORE_URL = process.env.NEXT_PUBLIC_APP_ANDROID_STORE_URL || "";
 
 export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode = "-", className = "" }) => {
   const t = useTranslations("invitation");
@@ -46,22 +45,28 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
   const lastScrollY = useRef<number>(0);
   const draggingRef = useRef(false);
   const tapHandledRef = useRef(false);
-  const fallbackTimerRef = useRef<number | null>(null);
-  const didLaunchAppRef = useRef(false);
-  const blurTimestampRef = useRef(0);
   const cardRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    return () => {
-      if (fallbackTimerRef.current) {
-        window.clearTimeout(fallbackTimerRef.current);
-        fallbackTimerRef.current = null;
-      }
-    };
-  }, []);
-
   const resolvedCode = invitationCode && invitationCode !== "-" ? invitationCode : urlCode || "-";
+
+  // Use app launcher hook for app launching with fallback
+  const { launch: launchApp } = useAppLauncher({
+    deepLinkParams: resolvedCode && resolvedCode !== "-" ? { code: resolvedCode } : undefined,
+    onSuccess: () => {
+      console.log('App launched successfully');
+    },
+    onFallback: () => {
+      console.log('Redirected to app store');
+    }
+  });
+
+  // Use app store hook for direct store opening
+  const { openStore, isAvailable: storeAvailable } = useAppStore({
+    onOpen: (platform) => {
+      console.log(`Opening ${platform} store`);
+    }
+  });
 
   const handleCopyCode = useCallback(() => {
     if (!resolvedCode) return;
@@ -75,106 +80,11 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
       });
   }, [resolvedCode, t]);
 
-  const buildAppLink = useCallback(() => {
-    if (!APP_DEEPLINK_URL) return "";
-
-    try {
-      const url = new URL(APP_DEEPLINK_URL);
-      url.searchParams.set("code", resolvedCode);
-      return url.toString();
-    } catch {
-      const separator = APP_DEEPLINK_URL.includes("?") ? "&" : "?";
-      return `${APP_DEEPLINK_URL}${separator}code=${encodeURIComponent(resolvedCode)}`;
-    }
-  }, [resolvedCode]);
-
-  const openAppOrStore = useCallback(() => {
-    toast("Opening app or store...", { position: "top-center", className: "bg-[#1c1917]! text-white!" });
-    const appLink = buildAppLink();
-    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-    const storeUrl = isIOS ? IOS_STORE_URL : ANDROID_STORE_URL;
-
-    if (!appLink) {
-      if (storeUrl) {
-        window.location.href = storeUrl;
-      }
-      return;
-    }
-
-    didLaunchAppRef.current = false;
-    blurTimestampRef.current = 0;
-
-    const redirectToStore = () => {
-      if (storeUrl) {
-        window.location.href = storeUrl;
-      }
-    };
-
-    const cleanup = () => {
-      if (fallbackTimerRef.current) {
-        window.clearTimeout(fallbackTimerRef.current);
-        fallbackTimerRef.current = null;
-      }
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-      window.removeEventListener("pagehide", handleVisibilityChange);
-      window.removeEventListener("blur", handleBlur);
-      window.removeEventListener("focus", handleFocus);
-    };
-
-    const handleVisibilityChange = () => {
-      if (document.hidden) {
-        didLaunchAppRef.current = true;
-        cleanup();
-      }
-    };
-
-    const handleFocus = () => {
-      window.removeEventListener("focus", handleFocus);
-      const returnedQuickly = Date.now() - blurTimestampRef.current < (isIOS ? 2200 : 1400);
-      if (!didLaunchAppRef.current && returnedQuickly) {
-        cleanup();
-        redirectToStore();
-      } else if (!didLaunchAppRef.current) {
-        startFallbackTimer();
-      }
-    };
-
-    const handleBlur = () => {
-      blurTimestampRef.current = Date.now();
-      if (fallbackTimerRef.current) {
-        window.clearTimeout(fallbackTimerRef.current);
-        fallbackTimerRef.current = null;
-      }
-      window.addEventListener("focus", handleFocus, { once: true });
-    };
-
-    const startFallbackTimer = () => {
-      if (!storeUrl) return;
-      if (fallbackTimerRef.current) {
-        window.clearTimeout(fallbackTimerRef.current);
-      }
-
-      fallbackTimerRef.current = window.setTimeout(() => {
-        fallbackTimerRef.current = null;
-        if (!didLaunchAppRef.current && document.visibilityState === "visible") {
-          cleanup();
-          redirectToStore();
-        }
-      }, isIOS ? 2600 : 1300);
-    };
-
-    document.addEventListener("visibilitychange", handleVisibilityChange, false);
-    window.addEventListener("pagehide", handleVisibilityChange, false);
-    window.addEventListener("blur", handleBlur, false);
-
-    startFallbackTimer();
-    window.location.href = appLink;
-  }, [buildAppLink]);
-
   const handleClaim = useCallback(() => {
     handleCopyCode();
-    openAppOrStore();
-  }, [handleCopyCode, openAppOrStore]);
+    toast("Opening app or store...", { position: "top-center", className: "bg-[#1c1917]! text-white!" });
+    launchApp();
+  }, [handleCopyCode, launchApp]);
 
   useEffect(() => {
     let ticking = false;
@@ -416,7 +326,14 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
                   style={{ fontFamily: "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif" }}
                 >
                   <p className="leading-normal whitespace-pre-wrap">
-                    <span className="underline decoration-solid [text-decoration-skip-ink:none] [text-underline-position:from-font]">
+                    <span
+                      className="underline decoration-solid [text-decoration-skip-ink:none] [text-underline-position:from-font] cursor-pointer hover:opacity-80"
+                      onClick={() => {
+                        if (storeAvailable) {
+                          openStore();
+                        }
+                      }}
+                    >
                       {t("step1.action")}
                     </span>
                     <span>{t("step1.description")}</span>
