@@ -54,18 +54,18 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
   const { launch: launchApp } = useAppLauncher({
     deepLinkParams: resolvedCode && resolvedCode !== "-" ? { code: resolvedCode } : undefined,
     onSuccess: () => {
-      console.log('App launched successfully');
+      console.log("App launched successfully");
     },
     onFallback: () => {
-      console.log('Redirected to app store');
-    }
+      console.log("Redirected to app store");
+    },
   });
 
   // Use app store hook for direct store opening
   const { openStore, isAvailable: storeAvailable } = useAppStore({
     onOpen: (platform) => {
       console.log(`Opening ${platform} store`);
-    }
+    },
   });
 
   const handleCopyCode = useCallback(() => {
@@ -81,10 +81,9 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
   }, [resolvedCode, t]);
 
   const handleClaim = useCallback(() => {
-    handleCopyCode();
     toast("Opening app or store...", { position: "top-center", className: "bg-[#1c1917]! text-white!" });
     launchApp();
-  }, [handleCopyCode, launchApp]);
+  }, [launchApp]);
 
   useEffect(() => {
     let ticking = false;

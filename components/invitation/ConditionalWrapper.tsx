@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode } from "react";
-import { useIdeaShellDetection } from "@/hooks/useUserAgent";
+import { useDeviceInfo, useIdeaShellDetection } from "@/hooks/useUserAgent";
 
 interface ConditionalWrapperProps {
   children: ReactNode;
@@ -9,12 +9,9 @@ interface ConditionalWrapperProps {
   forceShow?: boolean;
 }
 
-export function ConditionalWrapper({
-  children,
-  forceWebView = false,
-  forceShow = false
-}: ConditionalWrapperProps) {
+export function ConditionalWrapper({ children, forceWebView = false, forceShow = false }: ConditionalWrapperProps) {
   const { isIdeaShell, isLoading } = useIdeaShellDetection();
+  const { isIOS } = useDeviceInfo();
 
   // Force show overrides everything
   if (forceShow) {
@@ -26,8 +23,9 @@ export function ConditionalWrapper({
     return null;
   }
 
+  // In IdeaShell app: iOS needs top spacing, other platforms don't render
   if (!isLoading && isIdeaShell) {
-    return null;
+    return isIOS ? <div className="pt-10"></div> : null;
   }
 
   return <>{children}</>;

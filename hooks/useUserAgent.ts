@@ -73,6 +73,8 @@ export function useIdeaShellDetection(userAgentString?: string): {
 export function useDeviceInfo(): {
   platform: 'ios' | 'android' | 'unknown';
   isMobile: boolean;
+  isIOS: boolean;
+  isAndroid: boolean;
   deviceModel?: string;
   osVersion?: string;
   isLoading: boolean;
@@ -91,6 +93,8 @@ export function useDeviceInfo(): {
   return {
     platform: uaInfo?.platform ?? 'unknown',
     isMobile,
+    isIOS: uaInfo?.platform === 'ios',
+    isAndroid: uaInfo?.platform === 'android',
     deviceModel: uaInfo?.deviceModel,
     osVersion: uaInfo?.iosVersion ?? uaInfo?.androidVersion,
     isLoading,
