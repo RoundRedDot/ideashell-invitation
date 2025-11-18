@@ -12,6 +12,17 @@ interface InvitationCardProps {
 
 type CardState = "expanded" | "collapsed";
 
+const COLLAPSED_VISIBLE_HEIGHT = 70;
+const MAX_DRAG_DISTANCE = 220;
+const TAP_DISTANCE = 6;
+const DRAG_VELOCITY_BREAKPOINT = 0.5;
+const FAST_THRESHOLD = 50;
+const SLOW_THRESHOLD = 80;
+const COLLAPSED_TRANSLATE = `100% - ${COLLAPSED_VISIBLE_HEIGHT}px`;
+const APP_DEEPLINK_URL = process.env.NEXT_PUBLIC_APP_DEEPLINK_URL || "";
+const IOS_STORE_URL = process.env.NEXT_PUBLIC_APP_IOS_STORE_URL || "";
+const ANDROID_STORE_URL = process.env.NEXT_PUBLIC_APP_ANDROID_STORE_URL || "";
+
 export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode = "-", className = "" }) => {
   const t = useTranslations("invitation");
 
@@ -26,25 +37,151 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
   const [cardState, setCardState] = useState<CardState>("expanded");
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState(0);
+  const toggleCardState = useCallback(() => {
+    setCardState((prev) => (prev === "collapsed" ? "expanded" : "collapsed"));
+  }, []);
 
   const touchStartY = useRef<number>(0);
   const touchCurrentY = useRef<number>(0);
   const lastScrollY = useRef<number>(0);
+  const draggingRef = useRef(false);
+  const tapHandledRef = useRef(false);
+  const fallbackTimerRef = useRef<number | null>(null);
+  const didLaunchAppRef = useRef(false);
+  const blurTimestampRef = useRef(0);
   const cardRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    return () => {
+      if (fallbackTimerRef.current) {
+        window.clearTimeout(fallbackTimerRef.current);
+        fallbackTimerRef.current = null;
+      }
+    };
+  }, []);
+
   const resolvedCode = invitationCode && invitationCode !== "-" ? invitationCode : urlCode || "-";
 
-  const handleClaimCredits = () => {
-    navigator.clipboard.writeText(resolvedCode).then(() => {
-      toast.success(t("copiedButton"), { position: "top-center", className: "bg-[#1c1917]! text-white!" });
-    });
-  };
+  const handleCopyCode = useCallback(() => {
+    if (!resolvedCode) return;
+    navigator.clipboard
+      .writeText(resolvedCode)
+      .then(() => {
+        toast.success(t("copiedButton"), { position: "top-center", className: "bg-[#1c1917]! text-white!" });
+      })
+      .catch(() => {
+        // Best effort: ignore copy failures
+      });
+  }, [resolvedCode, t]);
+
+  const buildAppLink = useCallback(() => {
+    if (!APP_DEEPLINK_URL) return "";
+
+    try {
+      const url = new URL(APP_DEEPLINK_URL);
+      url.searchParams.set("code", resolvedCode);
+      return url.toString();
+    } catch {
+      const separator = APP_DEEPLINK_URL.includes("?") ? "&" : "?";
+      return `${APP_DEEPLINK_URL}${separator}code=${encodeURIComponent(resolvedCode)}`;
+    }
+  }, [resolvedCode]);
+
+  const openAppOrStore = useCallback(() => {
+    toast("Opening app or store...", { position: "top-center", className: "bg-[#1c1917]! text-white!" });
+    const appLink = buildAppLink();
+    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    const storeUrl = isIOS ? IOS_STORE_URL : ANDROID_STORE_URL;
+
+    if (!appLink) {
+      if (storeUrl) {
+        window.location.href = storeUrl;
+      }
+      return;
+    }
+
+    didLaunchAppRef.current = false;
+    blurTimestampRef.current = 0;
+
+    const redirectToStore = () => {
+      if (storeUrl) {
+        window.location.href = storeUrl;
+      }
+    };
+
+    const cleanup = () => {
+      if (fallbackTimerRef.current) {
+        window.clearTimeout(fallbackTimerRef.current);
+        fallbackTimerRef.current = null;
+      }
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("pagehide", handleVisibilityChange);
+      window.removeEventListener("blur", handleBlur);
+      window.removeEventListener("focus", handleFocus);
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        didLaunchAppRef.current = true;
+        cleanup();
+      }
+    };
+
+    const handleFocus = () => {
+      window.removeEventListener("focus", handleFocus);
+      const returnedQuickly = Date.now() - blurTimestampRef.current < (isIOS ? 2200 : 1400);
+      if (!didLaunchAppRef.current && returnedQuickly) {
+        cleanup();
+        redirectToStore();
+      } else if (!didLaunchAppRef.current) {
+        startFallbackTimer();
+      }
+    };
+
+    const handleBlur = () => {
+      blurTimestampRef.current = Date.now();
+      if (fallbackTimerRef.current) {
+        window.clearTimeout(fallbackTimerRef.current);
+        fallbackTimerRef.current = null;
+      }
+      window.addEventListener("focus", handleFocus, { once: true });
+    };
+
+    const startFallbackTimer = () => {
+      if (!storeUrl) return;
+      if (fallbackTimerRef.current) {
+        window.clearTimeout(fallbackTimerRef.current);
+      }
+
+      fallbackTimerRef.current = window.setTimeout(() => {
+        fallbackTimerRef.current = null;
+        if (!didLaunchAppRef.current && document.visibilityState === "visible") {
+          cleanup();
+          redirectToStore();
+        }
+      }, isIOS ? 2600 : 1300);
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange, false);
+    window.addEventListener("pagehide", handleVisibilityChange, false);
+    window.addEventListener("blur", handleBlur, false);
+
+    startFallbackTimer();
+    window.location.href = appLink;
+  }, [buildAppLink]);
+
+  const handleClaim = useCallback(() => {
+    handleCopyCode();
+    openAppOrStore();
+  }, [handleCopyCode, openAppOrStore]);
 
   useEffect(() => {
     let ticking = false;
 
     const handleScroll = () => {
+      if (draggingRef.current) return;
+
       if (!ticking) {
         window.requestAnimationFrame(() => {
           const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
@@ -75,6 +212,8 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
     touchStartY.current = e.touches[0].clientY;
     touchCurrentY.current = e.touches[0].clientY;
     setIsDragging(true);
+    draggingRef.current = true;
+    tapHandledRef.current = false;
   }, []);
 
   const handleTouchMove = useCallback(
@@ -85,9 +224,9 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
       const diff = touchStartY.current - touchCurrentY.current;
 
       if (cardState === "collapsed" && diff > 0) {
-        setDragOffset(Math.min(diff, 200));
+        setDragOffset(Math.min(diff, MAX_DRAG_DISTANCE));
       } else if (cardState === "expanded" && diff < 0) {
-        setDragOffset(Math.max(diff, -200));
+        setDragOffset(Math.max(diff, -MAX_DRAG_DISTANCE));
       }
     },
     [isDragging, cardState]
@@ -95,27 +234,35 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
 
   const handleTouchEnd = useCallback(() => {
     setIsDragging(false);
+    draggingRef.current = false;
 
     const dragDistance = touchStartY.current - touchCurrentY.current;
+    const isTap = Math.abs(dragDistance) < TAP_DISTANCE;
     const dragVelocity = Math.abs(dragDistance) / 100;
+    const threshold = dragVelocity > DRAG_VELOCITY_BREAKPOINT ? FAST_THRESHOLD : SLOW_THRESHOLD;
 
-    const threshold = dragVelocity > 0.5 ? 50 : 80;
-
-    if (cardState === "collapsed" && dragDistance > threshold) {
+    if (isTap) {
+      toggleCardState();
+    } else if (cardState === "collapsed" && dragDistance > threshold) {
       setCardState("expanded");
     } else if (cardState === "expanded" && dragDistance < -threshold) {
       setCardState("collapsed");
     }
 
+    tapHandledRef.current = true;
+
     setDragOffset(0);
     touchStartY.current = 0;
     touchCurrentY.current = 0;
-  }, [cardState]);
+  }, [cardState, toggleCardState]);
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
     touchStartY.current = e.clientY;
     touchCurrentY.current = e.clientY;
     setIsDragging(true);
+    draggingRef.current = true;
+    tapHandledRef.current = false;
   }, []);
 
   const handleMouseMove = useCallback(
@@ -126,9 +273,9 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
       const diff = touchStartY.current - touchCurrentY.current;
 
       if (cardState === "collapsed" && diff > 0) {
-        setDragOffset(Math.min(diff, 200));
+        setDragOffset(Math.min(diff, MAX_DRAG_DISTANCE));
       } else if (cardState === "expanded" && diff < 0) {
-        setDragOffset(Math.max(diff, -200));
+        setDragOffset(Math.max(diff, -MAX_DRAG_DISTANCE));
       }
     },
     [isDragging, cardState]
@@ -138,21 +285,27 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
     if (!isDragging) return;
 
     setIsDragging(false);
+    draggingRef.current = false;
 
     const dragDistance = touchStartY.current - touchCurrentY.current;
+    const isTap = Math.abs(dragDistance) < TAP_DISTANCE;
     const dragVelocity = Math.abs(dragDistance) / 100;
-    const threshold = dragVelocity > 0.5 ? 50 : 80;
+    const threshold = dragVelocity > DRAG_VELOCITY_BREAKPOINT ? FAST_THRESHOLD : SLOW_THRESHOLD;
 
-    if (cardState === "collapsed" && dragDistance > threshold) {
+    if (isTap) {
+      toggleCardState();
+    } else if (cardState === "collapsed" && dragDistance > threshold) {
       setCardState("expanded");
     } else if (cardState === "expanded" && dragDistance < -threshold) {
       setCardState("collapsed");
     }
 
+    tapHandledRef.current = true;
+
     setDragOffset(0);
     touchStartY.current = 0;
     touchCurrentY.current = 0;
-  }, [isDragging, cardState]);
+  }, [isDragging, cardState, toggleCardState]);
 
   useEffect(() => {
     if (isDragging) {
@@ -166,20 +319,24 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
   }, [isDragging, handleMouseMove, handleMouseUp]);
 
   const getTransform = () => {
+    const base = cardState === "collapsed" ? COLLAPSED_TRANSLATE : "0px";
+
     if (isDragging) {
-      const baseTransform = cardState === "collapsed" ? "calc(100% - 130px)" : "0";
-      return `translateY(calc(${baseTransform} - ${dragOffset}px))`;
+      return `translateY(calc(${base} - ${dragOffset}px))`;
     }
-    return cardState === "collapsed" ? "translateY(calc(100% - 70px))" : "translateY(0)";
+
+    return cardState === "collapsed" ? `translateY(calc(${base}))` : "translateY(0)";
   };
 
   return (
     <div
       ref={containerRef}
-      className={`fixed bottom-0 left-0 right-0 z-50 flex justify-center ${className}`}
+      className={`fixed bottom-0 z-50 flex justify-center ${className}`}
       style={{
         maxWidth: "428px",
-        margin: "0 16px",
+        width: "calc(100% - 32px)",
+        left: "50%",
+        transform: "translateX(-50%)",
       }}
     >
       <div
@@ -201,6 +358,13 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
           onMouseDown={handleMouseDown}
+          onClick={(e) => {
+            e.preventDefault();
+            if (!tapHandledRef.current) {
+              toggleCardState();
+              tapHandledRef.current = true;
+            }
+          }}
         >
           <div className="w-9 h-[5px] mx-auto bg-white/60 rounded-[100px]" />
         </div>
@@ -219,17 +383,19 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
                   className="flex flex-col justify-center text-2xl text-black font-semibold whitespace-nowrap"
                   style={{ fontFamily: "'New York', 'Times New Roman', serif" }}
                 >
-                  <p className="leading-normal" onClick={handleClaimCredits}>
+                  <p className="leading-normal" onClick={handleCopyCode}>
                     {resolvedCode}
                   </p>
                 </div>
               </div>
-              <button className="bg-[#1e1e1e] flex gap-2.5 h-8 items-center justify-center px-4 py-0 rounded-full overflow-clip">
+              <button
+                className="bg-[#1e1e1e] flex gap-2.5 h-8 items-center justify-center px-4 py-0 rounded-full overflow-clip"
+                onClick={handleClaim}
+              >
                 <div
                   className="capitalize flex flex-col justify-center text-[13px] text-center text-white font-bold whitespace-nowrap"
                   style={{ fontFamily: "'SF Pro', -apple-system, BlinkMacSystemFont, sans-serif" }}
                 >
-                  {/* <p className="leading-normal">{copied ? t("copiedButton") : t("claimButton")}</p> */}
                   <p className="leading-normal">{t("claimButton")}</p>
                 </div>
               </button>
