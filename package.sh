@@ -38,18 +38,18 @@ echo "🌍 Building for profile: ${PROFILE}"
 if [ "$PROFILE" = "cn" ]; then
   export NEXT_PUBLIC_BASE_PATH="/user/invite"
   export NEXT_PUBLIC_APP_DEEPLINK_URL="ideashellcn://user/invite"
-  export NEXT_PUBLIC_APP_IOS_STORE_URL="https://ideashell.ai/download"
-  export NEXT_PUBLIC_APP_ANDROID_STORE_URL="https://ideashell.ai/download"
+  export NEXT_PUBLIC_APP_IOS_STORE_URL="https://apps.apple.com/app/apple-store/id6476344403?pt=126631069&ct=invite&mt=8"
+  export NEXT_PUBLIC_APP_ANDROID_STORE_URL="https://ideashell.ai/az"
 elif [ "$PROFILE" = "us" ]; then
   export NEXT_PUBLIC_BASE_PATH="/user/invite"
   export NEXT_PUBLIC_APP_DEEPLINK_URL="ideashell://user/invite"
-  export NEXT_PUBLIC_APP_IOS_STORE_URL="https://apps.apple.com/app/apple-store/id6478199476?pt=126892645&ct=TikTokAds&mt=8"
-  export NEXT_PUBLIC_APP_ANDROID_STORE_URL="https://play.google.com/store/apps/details?id=com.rrd.ideaShell&referrer=utm_source%3DSpark%2BAD%26utm_medium%3DTikTok%26utm_campaign%3Dkol"
+  export NEXT_PUBLIC_APP_IOS_STORE_URL="https://apps.apple.com/app/apple-store/id6478199476?pt=126892645&ct=invite&mt=8"
+  export NEXT_PUBLIC_APP_ANDROID_STORE_URL="https://play.google.com/store/apps/details?id=com.rrd.ideaShell&referrer=utm_source%3DGoogle%26utm_campaign%3Dinvite"
 else
   export NEXT_PUBLIC_BASE_PATH="/user/invite"
   export NEXT_PUBLIC_APP_DEEPLINK_URL="ideashellcn://user/invite"
-  export NEXT_PUBLIC_APP_IOS_STORE_URL="https://ideashell.ai/download"
-  export NEXT_PUBLIC_APP_ANDROID_STORE_URL="https://ideashell.ai/download"
+  export NEXT_PUBLIC_APP_IOS_STORE_URL="https://apps.apple.com/app/apple-store/id6476344403?pt=126631069&ct=invite&mt=8"
+  export NEXT_PUBLIC_APP_ANDROID_STORE_URL="https://ideashell.ai/az"
 fi
 
 echo "🔗 DEEPLINK_URL: ${NEXT_PUBLIC_APP_DEEPLINK_URL}"
