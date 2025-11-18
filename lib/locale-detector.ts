@@ -260,3 +260,97 @@ export function getLocaleWithFallback(preferredLocale?: string): Locale {
   // Try to detect from UA
   return getPreferredLocale();
 }
+
+/**
+ * Map a URL path segment to a supported locale
+ * This is used for handling invalid locale paths like /zh-Hant, /pt-PT, etc.
+ *
+ * @param pathSegment - The potential locale from URL path
+ * @returns The mapped locale or null if not mappable
+ */
+export function mapPathToLocale(pathSegment: string): Locale | null {
+  // First check if it's already a valid locale
+  if (isValidLocale(pathSegment)) {
+    return pathSegment;
+  }
+
+  // Normalize the path segment for mapping
+  // Handle both hyphen and underscore separators
+  const normalized = pathSegment.replace(/-/g, '_');
+
+  // Try exact match in mapping
+  if (normalized in LANGUAGE_MAPPING) {
+    return LANGUAGE_MAPPING[normalized];
+  }
+
+  // Handle special cases for Chinese with script codes
+  if (pathSegment.match(/^zh[-_]Hans/i)) {
+    return 'zh-CN'; // Simplified Chinese
+  }
+  if (pathSegment.match(/^zh[-_]Hant/i)) {
+    return 'zh-TW'; // Traditional Chinese
+  }
+
+  // Try language part only (before hyphen/underscore)
+  const langPart = pathSegment.split(/[-_]/)[0].toLowerCase();
+
+  // Map common language codes
+  switch (langPart) {
+    case 'zh':
+    case 'chi':
+    case 'zho':
+      // Default Chinese to simplified unless specified
+      return 'zh-CN';
+    case 'ja':
+    case 'jpn':
+      return 'ja';
+    case 'es':
+    case 'spa':
+      return 'es';
+    case 'pt':
+    case 'por':
+      return 'pt-BR';
+    case 'fr':
+    case 'fra':
+    case 'fre':
+      return 'fr';
+    case 'de':
+    case 'ger':
+    case 'deu':
+      return 'de';
+    case 'en':
+    case 'eng':
+      return 'en';
+    default:
+      return null;
+  }
+}
+
+/**
+ * Check if a path segment looks like a locale code
+ * Used to distinguish locale 404s from other 404s
+ *
+ * @param pathSegment - The path segment to check
+ * @returns True if it looks like a locale code
+ */
+export function looksLikeLocale(pathSegment: string): boolean {
+  if (!pathSegment || pathSegment.length < 2 || pathSegment.length > 15) {
+    return false;
+  }
+
+  // Check common locale patterns
+  return (
+    // Standard language codes (en, zh, ja, etc.)
+    /^[a-z]{2}$/i.test(pathSegment) ||
+    // Language with region (zh-CN, pt-BR, en-US, etc.)
+    /^[a-z]{2}[-_][A-Z]{2}$/i.test(pathSegment) ||
+    // Language with script (zh-Hans, zh-Hant)
+    /^[a-z]{2}[-_][A-Z][a-z]{3}$/i.test(pathSegment) ||
+    // Language with script and region (zh-Hans-CN, zh-Hant-TW)
+    /^[a-z]{2}[-_][A-Z][a-z]{3}[-_][A-Z]{2}$/i.test(pathSegment) ||
+    // Three-letter language codes (eng, fra, deu, etc.)
+    /^[a-z]{3}$/i.test(pathSegment) ||
+    // Three-letter with region
+    /^[a-z]{3}[-_][A-Z]{2}$/i.test(pathSegment)
+  );
+}

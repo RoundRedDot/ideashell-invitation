@@ -6,6 +6,8 @@ import { ConditionalWrapper } from "@/components/invitation/ConditionalWrapper";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import LanguageSelector from "@/components/LanguageSelector";
 import { locales } from "@/i18n/config";
+import { isLocaleVariant, getCanonicalLocale, getAllStaticLocalePaths } from "@/lib/locale-variants";
+import { LocaleRedirect } from "@/components/LocaleRedirect";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -13,6 +15,16 @@ interface PageProps {
 
 export default async function Home({ params }: PageProps) {
   const { locale } = await params;
+
+  // Check if this is a locale variant that needs redirection
+  if (isLocaleVariant(locale)) {
+    const canonicalLocale = getCanonicalLocale(locale);
+    if (canonicalLocale) {
+      // Return a client-side redirect component
+      return <LocaleRedirect from={locale} to={canonicalLocale} />;
+    }
+  }
+
   setRequestLocale(locale);
 
   const t = await getTranslations("home");
@@ -63,9 +75,16 @@ export default async function Home({ params }: PageProps) {
   );
 }
 
-// Ensure static paths are generated for the dynamic [locale] segment
+// Generate static paths for both supported locales and common variants
 export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
+  // Generate paths for supported locales
+  const supportedPaths = locales.map((locale) => ({ locale }));
+
+  // Generate paths for common locale variants (they will redirect)
+  const variantPaths = getAllStaticLocalePaths().map((variant) => ({ locale: variant }));
+
+  // Combine both lists
+  return [...supportedPaths, ...variantPaths];
 }
 
 // Extra hints for static export robustness
