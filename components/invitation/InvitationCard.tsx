@@ -15,6 +15,7 @@ interface InvitationCardProps {
 type CardState = "expanded" | "collapsed";
 
 const COLLAPSED_VISIBLE_HEIGHT = 70;
+const BOTTOM_MARGIN = 24;
 const MAX_DRAG_DISTANCE = 220;
 const TAP_DISTANCE = 6;
 const DRAG_VELOCITY_BREAKPOINT = 0.5;
@@ -24,14 +25,19 @@ const SLOW_THRESHOLD = 80;
 export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode = "-", className = "" }) => {
   const t = useTranslations("invitation");
 
-  const [urlCode] = useState<string>(() => {
+  const [urlCode, setUrlCode] = useState<string>("");
+
+  useEffect(() => {
     try {
       const qs = new URLSearchParams(window.location.search);
-      return qs.get("code") || "";
+      const code = qs.get("code");
+      if (code) {
+        setUrlCode(code);
+      }
     } catch {
-      return "";
+      // Ignore errors during search param parsing
     }
-  });
+  }, []);
   const [cardState, setCardState] = useState<CardState>("expanded");
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState(0);
@@ -120,7 +126,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
           // If we are close to bottom, we want to track precise distance
           // We only care if the distance is less than the collapsed translation amount (approx height - 70)
           // plus a buffer to ensure smooth entry.
-          const collapsedTranslation = cardRef.current ? cardRef.current.offsetHeight - COLLAPSED_VISIBLE_HEIGHT : 200;
+          const collapsedTranslation = cardRef.current ? cardRef.current.offsetHeight + BOTTOM_MARGIN - COLLAPSED_VISIBLE_HEIGHT : 200;
 
           if (dist < collapsedTranslation + 20) {
             setDistanceToBottom(dist);
@@ -159,7 +165,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
   }, []);
 
   // Docking logic
-  const collapsedTranslation = cardHeight ? cardHeight - COLLAPSED_VISIBLE_HEIGHT : 0;
+  const collapsedTranslation = cardHeight ? cardHeight + BOTTOM_MARGIN - COLLAPSED_VISIBLE_HEIGHT : 0;
   const isDocked = distanceToBottom !== null && distanceToBottom < collapsedTranslation + 20;
 
   const handleTouchStart = useCallback(
@@ -310,7 +316,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
   return (
     <div
       ref={containerRef}
-      className={`fixed bottom-0 z-50 flex justify-center ${className}`}
+      className={`fixed bottom-4 z-50 flex justify-center ${className}`}
       style={{
         maxWidth: "428px",
         width: "calc(100% - 32px)",
@@ -320,7 +326,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
     >
       <div
         ref={cardRef}
-        className="bg-[#ffc226] flex flex-col w-full rounded-t-2xl shadow-[0px_-4px_24px_0px_rgba(0,0,0,0.12)]"
+        className="bg-[#ffc226] flex flex-col w-full rounded-2xl shadow-[0px_-4px_24px_0px_rgba(0,0,0,0.12)]"
         style={{
           transform: getTransform(),
           transition: shouldDisableTransition ? "none" : "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
