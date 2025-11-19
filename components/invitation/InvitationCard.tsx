@@ -20,7 +20,6 @@ const TAP_DISTANCE = 6;
 const DRAG_VELOCITY_BREAKPOINT = 0.5;
 const FAST_THRESHOLD = 50;
 const SLOW_THRESHOLD = 80;
-const COLLAPSED_TRANSLATE = `100% - ${COLLAPSED_VISIBLE_HEIGHT}px`;
 
 export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode = "-", className = "" }) => {
   const t = useTranslations("invitation");
@@ -36,6 +35,9 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
   const [cardState, setCardState] = useState<CardState>("expanded");
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState(0);
+  const [distanceToBottom, setDistanceToBottom] = useState<number | null>(null);
+  const [cardHeight, setCardHeight] = useState(0);
+
   const toggleCardState = useCallback(() => {
     setCardState((prev) => (prev === "collapsed" ? "expanded" : "collapsed"));
   }, []);
@@ -85,6 +87,19 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
     launchApp();
   }, [launchApp]);
 
+  // Measure card height on mount and resize
+  useEffect(() => {
+    const updateHeight = () => {
+      if (cardRef.current) {
+        setCardHeight(cardRef.current.offsetHeight);
+      }
+    };
+
+    updateHeight();
+    window.addEventListener("resize", updateHeight);
+    return () => window.removeEventListener("resize", updateHeight);
+  }, []);
+
   useEffect(() => {
     let ticking = false;
 
@@ -96,10 +111,36 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
           const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
           const scrollDiff = currentScrollY - lastScrollY.current;
 
+          // Check if we are at the bottom of the page
+          const windowHeight = window.innerHeight;
+          const documentHeight = document.documentElement.scrollHeight;
+          const dist = documentHeight - (currentScrollY + windowHeight);
+
+          // Docking logic:
+          // If we are close to bottom, we want to track precise distance
+          // We only care if the distance is less than the collapsed translation amount (approx height - 70)
+          // plus a buffer to ensure smooth entry.
+          const collapsedTranslation = cardRef.current ? cardRef.current.offsetHeight - COLLAPSED_VISIBLE_HEIGHT : 200;
+
+          if (dist < collapsedTranslation + 20) {
+            setDistanceToBottom(dist);
+          } else {
+            setDistanceToBottom(null);
+          }
+
           if (Math.abs(scrollDiff) > 5) {
-            if (currentScrollY > 100 && scrollDiff > 0) {
-              setCardState("collapsed");
+            // Only change state if we are NOT in the docking zone (to avoid fighting)
+            // OR if we are scrolling UP (always allow expanding)
+            if (dist > collapsedTranslation) {
+              if (currentScrollY > 100 && scrollDiff > 0) {
+                setCardState("collapsed");
+              } else if (scrollDiff < 0) {
+                setCardState("expanded");
+              }
             } else if (scrollDiff < 0) {
+              // Even in docking zone, if scrolling up, ensure we are expanded logic-wise
+              // though visual override might still apply if very close to bottom,
+              // but actually if we scroll up, dist increases, so we eventually exit docking zone.
               setCardState("expanded");
             }
 
@@ -117,17 +158,25 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleTouchStart = useCallback((e: React.TouchEvent) => {
-    touchStartY.current = e.touches[0].clientY;
-    touchCurrentY.current = e.touches[0].clientY;
-    setIsDragging(true);
-    draggingRef.current = true;
-    tapHandledRef.current = false;
-  }, []);
+  // Docking logic
+  const collapsedTranslation = cardHeight ? cardHeight - COLLAPSED_VISIBLE_HEIGHT : 0;
+  const isDocked = distanceToBottom !== null && distanceToBottom < collapsedTranslation + 20;
+
+  const handleTouchStart = useCallback(
+    (e: React.TouchEvent) => {
+      if (isDocked) return;
+      touchStartY.current = e.touches[0].clientY;
+      touchCurrentY.current = e.touches[0].clientY;
+      setIsDragging(true);
+      draggingRef.current = true;
+      tapHandledRef.current = false;
+    },
+    [isDocked]
+  );
 
   const handleTouchMove = useCallback(
     (e: React.TouchEvent) => {
-      if (!isDragging) return;
+      if (!isDragging || isDocked) return;
 
       touchCurrentY.current = e.touches[0].clientY;
       const diff = touchStartY.current - touchCurrentY.current;
@@ -138,10 +187,11 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
         setDragOffset(Math.max(diff, -MAX_DRAG_DISTANCE));
       }
     },
-    [isDragging, cardState]
+    [isDragging, cardState, isDocked]
   );
 
   const handleTouchEnd = useCallback(() => {
+    if (isDocked) return;
     setIsDragging(false);
     draggingRef.current = false;
 
@@ -163,20 +213,24 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
     setDragOffset(0);
     touchStartY.current = 0;
     touchCurrentY.current = 0;
-  }, [cardState, toggleCardState]);
+  }, [cardState, toggleCardState, isDocked]);
 
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    e.preventDefault();
-    touchStartY.current = e.clientY;
-    touchCurrentY.current = e.clientY;
-    setIsDragging(true);
-    draggingRef.current = true;
-    tapHandledRef.current = false;
-  }, []);
+  const handleMouseDown = useCallback(
+    (e: React.MouseEvent) => {
+      if (isDocked) return;
+      e.preventDefault();
+      touchStartY.current = e.clientY;
+      touchCurrentY.current = e.clientY;
+      setIsDragging(true);
+      draggingRef.current = true;
+      tapHandledRef.current = false;
+    },
+    [isDocked]
+  );
 
   const handleMouseMove = useCallback(
     (e: MouseEvent) => {
-      if (!isDragging) return;
+      if (!isDragging || isDocked) return;
 
       touchCurrentY.current = e.clientY;
       const diff = touchStartY.current - touchCurrentY.current;
@@ -187,11 +241,11 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
         setDragOffset(Math.max(diff, -MAX_DRAG_DISTANCE));
       }
     },
-    [isDragging, cardState]
+    [isDragging, cardState, isDocked]
   );
 
   const handleMouseUp = useCallback(() => {
-    if (!isDragging) return;
+    if (!isDragging || isDocked) return;
 
     setIsDragging(false);
     draggingRef.current = false;
@@ -214,7 +268,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
     setDragOffset(0);
     touchStartY.current = 0;
     touchCurrentY.current = 0;
-  }, [isDragging, cardState, toggleCardState]);
+  }, [isDragging, cardState, toggleCardState, isDocked]);
 
   useEffect(() => {
     if (isDragging) {
@@ -228,14 +282,30 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
   }, [isDragging, handleMouseMove, handleMouseUp]);
 
   const getTransform = () => {
-    const base = cardState === "collapsed" ? COLLAPSED_TRANSLATE : "0px";
+    // Calculate the standard translation based on state
+    // If collapsed, we translate down by (height - visible_height)
+    // If expanded, we translate by 0
+    const baseTranslation = cardState === "collapsed" ? collapsedTranslation : 0;
 
-    if (isDragging) {
-      return `translateY(calc(${base} - ${dragOffset}px))`;
+    let finalTranslation = baseTranslation;
+
+    // Apply docking logic
+    // If we are near bottom (distanceToBottom is set), the card should never be hidden more than distanceToBottom
+    // This creates the effect of the card being "pushed up" by the bottom of the page
+    if (distanceToBottom !== null && cardState === "collapsed") {
+      finalTranslation = Math.min(baseTranslation, distanceToBottom);
     }
 
-    return cardState === "collapsed" ? `translateY(calc(${base}))` : "translateY(0)";
+    // Apply drag offset
+    if (isDragging) {
+      finalTranslation -= dragOffset;
+    }
+
+    return `translateY(${finalTranslation}px)`;
   };
+
+  // Disable transition when dragging OR when in docking mode (to prevent laggy scroll sync)
+  const shouldDisableTransition = isDragging || (distanceToBottom !== null && cardState === "collapsed");
 
   return (
     <div
@@ -253,7 +323,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
         className="bg-[#ffc226] flex flex-col w-full rounded-t-2xl shadow-[0px_-4px_24px_0px_rgba(0,0,0,0.12)]"
         style={{
           transform: getTransform(),
-          transition: isDragging ? "none" : "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+          transition: shouldDisableTransition ? "none" : "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
           willChange: "transform",
         }}
         role="region"
@@ -262,14 +332,15 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
       >
         {/* Handle */}
         <div
-          className="pt-3 pb-2 cursor-grab active:cursor-grabbing touch-none"
+          className="pt-3 pb-2 cursor-grab active:cursor-grabbing touch-none transition-opacity duration-300"
+          style={{ opacity: isDocked ? 0 : 1, pointerEvents: isDocked ? "none" : "auto" }}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
           onMouseDown={handleMouseDown}
           onClick={(e) => {
             e.preventDefault();
-            if (!tapHandledRef.current) {
+            if (!tapHandledRef.current && !isDocked) {
               toggleCardState();
               tapHandledRef.current = true;
             }
