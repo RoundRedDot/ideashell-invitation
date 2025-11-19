@@ -81,8 +81,8 @@ export class UAParser {
    * Regular expressions for parsing different parts of the User-Agent
    */
   private static readonly PATTERNS = {
-    // ideaShell pattern: ideaShell/{version}({build})
-    ideaShell: /ideaShell\/([0-9.]+)\((\d+)\)/,
+    // ideaShell pattern: ideaShell/{version}({build}) or ideaShellCN/{version}({build})
+    ideaShell: /ideaShell(?:CN)?\/([0-9.]+)\((\d+)\)/,
 
     // iOS patterns
     iosVersion: /CPU (?:iPhone )?OS ([0-9_]+)/,
