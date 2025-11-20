@@ -113,7 +113,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       siteName: "ideaShell",
       images: [
         {
-          url: getAssetPath("/og-image.jpg"),
+          url: getAssetPath("/ideashell.png"),
           width: 1200,
           height: 630,
           alt: content.ogTitle,
@@ -126,7 +126,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       card: "summary_large_image",
       title: content.ogTitle,
       description: content.ogDescription,
-      images: [getAssetPath("/og-image.jpg")],
+      images: [getAssetPath("/ideashell.png")],
     },
   };
 }
