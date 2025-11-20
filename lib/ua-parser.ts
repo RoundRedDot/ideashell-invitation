@@ -10,6 +10,11 @@ export interface UAInfo {
   isIdeaShell: boolean;
 
   /**
+   * Whether this is a WeChat WebView
+   */
+  isWeChat: boolean;
+
+  /**
    * The detected platform
    */
   platform: 'ios' | 'android' | 'unknown';
@@ -84,6 +89,9 @@ export class UAParser {
     // ideaShell pattern: ideaShell/{version}({build}) or ideaShellCN/{version}({build})
     ideaShell: /ideaShell(?:CN)?\/([0-9.]+)\((\d+)\)/,
 
+    // WeChat pattern
+    wechat: /MicroMessenger/i,
+
     // iOS patterns
     iosVersion: /CPU (?:iPhone )?OS ([0-9_]+)/,
     iosDevice: /Device\/([^\s]+)/,
@@ -106,6 +114,7 @@ export class UAParser {
   public parse(ua: string): UAInfo {
     const info: UAInfo = {
       isIdeaShell: false,
+      isWeChat: false,
       platform: 'unknown',
       rawUA: ua,
     };
@@ -116,6 +125,11 @@ export class UAParser {
       info.isIdeaShell = true;
       info.appVersion = ideaShellMatch[1];
       info.buildNumber = ideaShellMatch[2];
+    }
+
+    // Check if it's WeChat
+    if (UAParser.PATTERNS.wechat.test(ua)) {
+      info.isWeChat = true;
     }
 
     // Determine platform

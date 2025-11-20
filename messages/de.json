@@ -28,6 +28,10 @@
     },
     "step2": {
       "description": "Kehre hierher zurück und klicke auf \"Einladung annehmen\" oder gib den Einladungscode unter Einstellungen/Mein Konto ein."
+    },
+    "wechatGuide": {
+      "title": "Tippe auf das Menü oben rechts",
+      "subtitle": "Im Browser öffnen"
     }
   },
   "reviews": {

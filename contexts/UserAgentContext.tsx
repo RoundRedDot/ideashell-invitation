@@ -18,6 +18,11 @@ interface UserAgentContextType {
   isIdeaShell: boolean;
 
   /**
+   * Whether the User-Agent is from WeChat WebView
+   */
+  isWeChat: boolean;
+
+  /**
    * The platform detected from User-Agent
    */
   platform: 'ios' | 'android' | 'unknown';
@@ -108,12 +113,14 @@ export function UserAgentProvider({
 
     // Extract values from uaInfo
     const isIdeaShell = uaInfo?.isIdeaShell ?? false;
+    const isWeChat = uaInfo?.isWeChat ?? false;
     const platform = uaInfo?.platform ?? 'unknown';
     const isMobile = platform === 'ios' || platform === 'android';
 
     return {
       uaInfo,
       isIdeaShell,
+      isWeChat,
       platform,
       isMobile,
       appVersion: uaInfo?.appVersion,
@@ -162,6 +169,26 @@ export function useIsIdeaShell(): boolean {
       const parser = new UAParser();
       const uaInfo = parser.parse(navigator.userAgent);
       return uaInfo.isIdeaShell;
+    }
+    return false;
+  }
+}
+
+/**
+ * Hook to check if running in WeChat WebView (using context)
+ *
+ * @returns boolean indicating if running in WeChat WebView
+ */
+export function useIsWeChat(): boolean {
+  try {
+    const { isWeChat } = useUserAgentContext();
+    return isWeChat;
+  } catch {
+    // If context is not available, fall back to direct detection
+    if (typeof window !== 'undefined' && typeof navigator !== 'undefined') {
+      const parser = new UAParser();
+      const uaInfo = parser.parse(navigator.userAgent);
+      return uaInfo.isWeChat;
     }
     return false;
   }

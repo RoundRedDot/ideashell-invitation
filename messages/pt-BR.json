@@ -28,6 +28,10 @@
     },
     "step2": {
       "description": "Volte aqui e pressione \"Aceitar Convite\" ou insira o código na página de Configurações/Minha Conta."
+    },
+    "wechatGuide": {
+      "title": "Toque no menu no canto superior direito",
+      "subtitle": "Abrir no navegador"
     }
   },
   "reviews": {

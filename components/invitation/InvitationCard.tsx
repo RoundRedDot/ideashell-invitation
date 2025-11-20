@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { useAppLauncher } from "@/hooks/useAppLauncher";
 import { useAppStore } from "@/hooks/useAppStore";
+import { useWeChatOverlay } from "@/hooks/useWeChatOverlay";
 
 interface InvitationCardProps {
   invitationCode?: string;
@@ -25,19 +26,18 @@ const SLOW_THRESHOLD = 80;
 export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode = "-", className = "" }) => {
   const t = useTranslations("invitation");
 
-  const [urlCode, setUrlCode] = useState<string>("");
+  const { checkWeChat, WeChatOverlay } = useWeChatOverlay();
 
-  useEffect(() => {
+  // Get code from URL on client side only, avoiding useEffect state update pattern
+  const [urlCode] = useState<string>(() => {
+    if (typeof window === 'undefined') return "";
     try {
       const qs = new URLSearchParams(window.location.search);
-      const code = qs.get("code");
-      if (code) {
-        setUrlCode(code);
-      }
+      return qs.get("code") || "";
     } catch {
-      // Ignore errors during search param parsing
+      return "";
     }
-  }, []);
+  });
   const [cardState, setCardState] = useState<CardState>("expanded");
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState(0);
@@ -89,9 +89,11 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
   }, [resolvedCode, t]);
 
   const handleClaim = useCallback(() => {
+    if (checkWeChat()) return;
+    
     toast("Opening app or store...", { position: "top-center", className: "bg-[#1c1917]! text-white!" });
     launchApp();
-  }, [launchApp]);
+  }, [launchApp, checkWeChat]);
 
   // Measure card height on mount and resize
   useEffect(() => {
@@ -405,6 +407,8 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
                     <span
                       className="underline decoration-solid [text-decoration-skip-ink:none] [text-underline-position:from-font] cursor-pointer hover:opacity-80"
                       onClick={() => {
+                        if (checkWeChat()) return;
+
                         if (storeAvailable) {
                           openStore();
                         }
@@ -434,6 +438,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
           </div>
         </div>
       </div>
+      <WeChatOverlay />
     </div>
   );
 };

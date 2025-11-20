@@ -28,6 +28,10 @@
     },
     "step2": {
       "description": "返回此頁面並點選“接受邀請”，或在設定/我的帳號頁面輸入邀請碼。"
+    },
+    "wechatGuide": {
+      "title": "點擊右上角選單",
+      "subtitle": "在瀏覽器中打開"
     }
   },
   "reviews": {

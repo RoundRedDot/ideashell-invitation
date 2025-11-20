@@ -28,6 +28,10 @@
     },
     "step2": {
       "description": "Back here and press Accept Invitation or enter the invitation code on the Settings/My Account page."
+    },
+    "wechatGuide": {
+      "title": "Tap the top-right menu",
+      "subtitle": "Open in browser"
     }
   },
   "reviews": {

@@ -7,6 +7,7 @@
 
 import { useAppLauncher } from '@/hooks/useAppLauncher';
 import { useCallback } from 'react';
+import { useWeChatOverlay } from '@/hooks/useWeChatOverlay';
 
 interface AppDownloadButtonProps {
   children: React.ReactNode;
@@ -25,6 +26,8 @@ export function AppDownloadButton({
   onSuccess,
   onFallback
 }: AppDownloadButtonProps) {
+  const { checkWeChat, WeChatOverlay } = useWeChatOverlay();
+
   const { launch, isLaunching } = useAppLauncher({
     deepLinkParams,
     onSuccess: () => {
@@ -38,18 +41,26 @@ export function AppDownloadButton({
   });
 
   const handleClick = useCallback(() => {
+    if (checkWeChat()) {
+      return;
+    }
+
     onLaunch?.();
     launch();
-  }, [launch, onLaunch]);
+  }, [launch, onLaunch, checkWeChat]);
 
   return (
-    <button
-      className={className}
-      onClick={handleClick}
-      disabled={isLaunching}
-      aria-label="Download or open ideaShell app"
-    >
-      {children}
-    </button>
+    <>
+      <button
+        className={className}
+        onClick={handleClick}
+        disabled={isLaunching}
+        aria-label="Download or open ideaShell app"
+      >
+        {children}
+      </button>
+
+      <WeChatOverlay />
+    </>
   );
 }

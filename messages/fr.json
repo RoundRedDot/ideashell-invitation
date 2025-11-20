@@ -28,6 +28,10 @@
     },
     "step2": {
       "description": "Revenez ici et appuyez sur \"Accepter l'invitation\" ou saisissez le code d'invitation dans Paramètres / Mon compte."
+    },
+    "wechatGuide": {
+      "title": "Touchez le menu en haut à droite",
+      "subtitle": "Ouvrir dans le navigateur"
     }
   },
   "reviews": {
