@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { LeftDecorationIconSVG, RightDecorationIconSVG, ReviewCardTailSVG } from "@/components/ui/icones";
-import { useTranslations } from 'next-intl';
+import { useTranslations } from "next-intl";
 
 interface ReviewCardProps {
   title: string;
@@ -36,36 +36,39 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ title, content, stars = 5 }) =>
 };
 
 export const ReviewsSection = () => {
-  const t = useTranslations('reviews');
+  const t = useTranslations("reviews");
 
   // Get reviews array from translations
-  const reviews = t.raw('items') as Array<{ title: string; content: string }>;
+  const reviews = t.raw("items") as Array<{ title: string; content: string }>;
 
   return (
     <div className="space-y-12">
-      <div className="flex items-center justify-center gap-3">
-        <div className="w-[23px] h-[48px] shrink-0">
-          <LeftDecorationIconSVG className="w-full h-full" />
-        </div>
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center justify-center gap-3">
+          <div className="w-[23px] h-[48px] shrink-0">
+            <LeftDecorationIconSVG className="w-full h-full" />
+          </div>
 
-        <div className="flex flex-col items-center gap-2">
-          <div className="flex">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Image key={i} src={STAR_ICON} alt="star" width={18} height={18} className="block" />
-            ))}
+          <div className="flex flex-col items-center gap-2">
+            <div className="flex">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Image key={i} src={STAR_ICON} alt="star" width={18} height={18} className="block" />
+              ))}
+            </div>
+            <div className="text-[28px] font-bold text-[#343434] leading-none">{t("rating")}</div>
+            <div className="text-[13px] font-medium text-[#343434] text-center leading-tight uppercase max-w-[110px]">
+              {t("countNumber")}
+            </div>
+            <div className="text-[13px] font-medium text-[#343434] text-center leading-tight uppercase">{t("countDescription")}</div>
           </div>
-          <div className="text-[28px] font-bold text-[#343434] leading-none">{t('rating')}</div>
-          <div className="text-[13px] font-medium text-[#343434] text-center leading-tight uppercase max-w-[110px]">
-            {t('countNumber')}
-          </div>
-          <div className="text-[13px] font-medium text-[#343434] text-center leading-tight uppercase">
-            {t('countDescription')}
-          </div>
-        </div>
 
-        <div className="w-[23px] h-[48px] shrink-0">
-          <RightDecorationIconSVG className="w-full h-full" />
+          <div className="w-[23px] h-[48px] shrink-0">
+            <RightDecorationIconSVG className="w-full h-full" />
+          </div>
         </div>
+        <span className="text-zinc-400 text-xs font-medium font-['PingFang_SC']">
+          {t("countDescriptionGlobal")}
+        </span>
       </div>
 
       <div className="space-y-6">
