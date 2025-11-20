@@ -5,10 +5,12 @@ import { locales, localeLabels } from "@/i18n/config";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { LanguageIcon } from "./ui/icones";
 import { replaceLocaleInPath } from "@/lib/path-utils";
+import { useDeviceInfo } from "@/hooks/useUserAgent";
 
 export default function LanguageSelector({ currentLocale }: { currentLocale: string }) {
   const pathname = usePathname();
   const router = useRouter();
+  const { isAndroid } = useDeviceInfo();
 
   const handleLanguageChange = (newLocale: string) => {
     const newPath = replaceLocaleInPath(pathname, newLocale);
@@ -28,7 +30,7 @@ export default function LanguageSelector({ currentLocale }: { currentLocale: str
           </div>
         </SelectValue>
       </SelectTrigger>
-      <SelectContent align="end" className="min-w-[180px]">
+      <SelectContent align="end" side={isAndroid ? "top" : "bottom"} className="min-w-[180px]">
         {locales.map((locale) => (
           <SelectItem key={locale} value={locale} className="cursor-pointer">
             <span className="flex items-center gap-2">

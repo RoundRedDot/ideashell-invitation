@@ -13,26 +13,20 @@ interface PageProps {
 
 export default async function Home({ params }: PageProps) {
   const { locale } = await params;
-
   setRequestLocale(locale);
-
   const t = await getTranslations("home");
 
   return (
     <div className="min-h-screen bg-[#f4f4f4] overflow-x-hidden">
       <div className="mx-auto w-full max-w-[402px] lg:max-w-[428px] min-h-screen bg-[#f4f4f4]">
         <div className="flex flex-col gap-6 p-6 pb-[300px]">
-          <ConditionalWrapper>
+          <ConditionalWrapper headerSide>
             <AppDownloadHeader />
           </ConditionalWrapper>
           <div className="flex flex-col gap-1">
-            <div>
+            <div className="flex flex-col">
               <span className="text-stone-900 text-3xl font-extrabold leading-10">{t("hero.title")}</span>
-              <span className="text-stone-900 text-3xl font-bold leading-10">
-                <br />
-                {t("hero.for")}
-                <br />
-              </span>
+              <span className="text-stone-900 text-3xl font-bold leading-10">{t("hero.for")}</span>
               <span className="text-stone-900 text-3xl font-semibold leading-10">{t("hero.subtitle")}</span>
             </div>
             <p className="text-zinc-500 text-lg font-medium">{t("hero.description")}</p>

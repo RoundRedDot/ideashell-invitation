@@ -7,9 +7,10 @@ interface ConditionalWrapperProps {
   children: ReactNode;
   forceWebView?: boolean;
   forceShow?: boolean;
+  headerSide?: boolean;
 }
 
-export function ConditionalWrapper({ children, forceWebView = false, forceShow = false }: ConditionalWrapperProps) {
+export function ConditionalWrapper({ children, forceWebView = false, forceShow = false, headerSide = false }: ConditionalWrapperProps) {
   const { isIdeaShell, isLoading } = useIdeaShellDetection();
   const { isIOS } = useDeviceInfo();
 
@@ -25,7 +26,7 @@ export function ConditionalWrapper({ children, forceWebView = false, forceShow =
 
   // In IdeaShell app: iOS needs top spacing, other platforms don't render
   if (!isLoading && isIdeaShell) {
-    return isIOS ? <div style={{ marginTop: "calc(16px + env(safe-area-inset-top))" }}></div> : null;
+    return isIOS && headerSide ? <div style={{ marginTop: "env(safe-area-inset-top)" }}></div> : null;
   }
 
   return <>{children}</>;
