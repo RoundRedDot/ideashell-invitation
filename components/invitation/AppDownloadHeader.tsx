@@ -12,12 +12,10 @@ export const AppDownloadHeader = async () => {
         <div className="w-12 h-12 overflow-hidden">
           <Image src={getAssetPath("/ideashell.png")} width={48} height={48} alt="ideaShell" className="w-full h-full object-cover" />
         </div>
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col">
           <div className="text-base font-bold text-stone-900">ideaShell</div>
           <div className="justify-center">
-            <span className="text-zinc-500 text-sm font-bold">{t("header.rank")}</span>
-            <span className="text-zinc-500 text-sm font-normal">, </span>
-            <span className="text-zinc-500 text-sm font-bold">{t("header.reviews")}</span>
+            <span className="text-zinc-500 text-sm font-bold">{t("header.slug")}</span>
           </div>
         </div>
       </div>
