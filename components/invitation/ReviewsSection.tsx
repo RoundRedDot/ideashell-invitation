@@ -66,9 +66,9 @@ export const ReviewsSection = () => {
             <RightDecorationIconSVG className="w-full h-full" />
           </div>
         </div>
-        <span className="text-zinc-400 text-xs font-medium font-['PingFang_SC']">
-          {t("countDescriptionGlobal")}
-        </span>
+        <div className="flex justify-center">
+          <span className="text-zinc-400 text-xs font-medium font-['PingFang_SC'] mt-[5px]">{t("countDescriptionGlobal")}</span>
+        </div>
       </div>
 
       <div className="space-y-6">

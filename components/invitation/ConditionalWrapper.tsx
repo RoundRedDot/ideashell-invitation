@@ -26,7 +26,7 @@ export function ConditionalWrapper({ children, forceWebView = false, forceShow =
 
   // In IdeaShell app: iOS needs top spacing, other platforms don't render
   if (!isLoading && isIdeaShell) {
-    return isIOS && headerSide ? <div style={{ marginTop: "env(safe-area-inset-top)" }}></div> : null;
+    return isIOS && headerSide ? <div style={{ marginTop: "calc(env(safe-area-inset-top) - 16px)" }}></div> : null;
   }
 
   return <>{children}</>;
