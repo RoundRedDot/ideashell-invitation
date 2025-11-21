@@ -34,34 +34,26 @@ fi
 
 echo "🌍 Building for profile: ${PROFILE}"
 
-# Set environment variables based on profile
-if [ "$PROFILE" = "cn" ]; then
-  export NEXT_PUBLIC_BASE_PATH="/user/invite"
-  export NEXT_PUBLIC_APP_DEEPLINK_URL="ideashellcn://user/invite"
-  export NEXT_PUBLIC_APP_IOS_STORE_URL="https://apps.apple.com/app/apple-store/id6476344403?pt=126631069&ct=invite&mt=8"
-  export NEXT_PUBLIC_APP_ANDROID_STORE_URL="https://ideashell.ai/az"
-elif [ "$PROFILE" = "us" ]; then
-  export NEXT_PUBLIC_BASE_PATH="/user/invite"
-  export NEXT_PUBLIC_APP_DEEPLINK_URL="ideashell://user/invite"
-  export NEXT_PUBLIC_APP_IOS_STORE_URL="https://apps.apple.com/app/apple-store/id6478199476?pt=126892645&ct=invite&mt=8"
-  export NEXT_PUBLIC_APP_ANDROID_STORE_URL="https://play.google.com/store/apps/details?id=com.rrd.ideaShell&referrer=utm_source%3DGoogle%26utm_campaign%3Dinvite"
-else
-  export NEXT_PUBLIC_BASE_PATH="/user/invite"
-  export NEXT_PUBLIC_APP_DEEPLINK_URL="ideashellcn://user/invite"
-  export NEXT_PUBLIC_APP_IOS_STORE_URL="https://apps.apple.com/app/apple-store/id6476344403?pt=126631069&ct=invite&mt=8"
-  export NEXT_PUBLIC_APP_ANDROID_STORE_URL="https://ideashell.ai/az"
+# Set environment file based on profile
+ENV_SOURCE=".env.${PROFILE}"
+ENV_TARGET=".env"
+
+# Check if profile-specific env file exists
+if [ ! -f "${ENV_SOURCE}" ]; then
+  echo "❌ Error: Environment file '${ENV_SOURCE}' not found"
+  exit 1
 fi
 
-echo "🔗 DEEPLINK_URL: ${NEXT_PUBLIC_APP_DEEPLINK_URL}"
-echo "🍎 IOS_STORE_URL: ${NEXT_PUBLIC_APP_IOS_STORE_URL}"
-echo "🤖 ANDROID_STORE_URL: ${NEXT_PUBLIC_APP_ANDROID_STORE_URL}"
+echo "📝 Using environment file: ${ENV_SOURCE}"
+echo "📋 Environment variables:"
+cat "${ENV_SOURCE}"
+echo ""
 
-# Set NEXT_PUBLIC_BASE_PATH from environment variable or use default
-if [ -z "$NEXT_PUBLIC_BASE_PATH" ]; then
-  NEXT_PUBLIC_BASE_PATH="/user/invite"
-fi
+# Copy profile-specific env file to .env for Next.js to read
+cp "${ENV_SOURCE}" "${ENV_TARGET}"
 
-echo "🔧 Using NEXT_PUBLIC_BASE_PATH: ${NEXT_PUBLIC_BASE_PATH}"
+echo "✅ Environment file activated: ${ENV_TARGET}"
+echo ""
 
 # Get zip name from argument or use project directory name with profile suffix as default
 if [ -z "$ZIP_NAME" ]; then
@@ -79,11 +71,7 @@ pnpm install
 
 echo "🚀 Starting build process..."
 
-# Build the project with all environment variables
-NEXT_PUBLIC_BASE_PATH="${NEXT_PUBLIC_BASE_PATH}" \
-NEXT_PUBLIC_APP_DEEPLINK_URL="${NEXT_PUBLIC_APP_DEEPLINK_URL}" \
-NEXT_PUBLIC_APP_IOS_STORE_URL="${NEXT_PUBLIC_APP_IOS_STORE_URL}" \
-NEXT_PUBLIC_APP_ANDROID_STORE_URL="${NEXT_PUBLIC_APP_ANDROID_STORE_URL}" \
+# Build the project (environment variables are read from .env file)
 pnpm run build
 
 echo "📦 Creating zip archive..."
