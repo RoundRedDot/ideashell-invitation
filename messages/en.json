@@ -42,16 +42,36 @@
     "countDescriptionGlobal": "Overall score globally, with variations displayed for each region.",
     "items": [
       {
-        "title": "Journaling is healing, Shanshan is amazing!",
-        "content": "After using it for a few days, I feel great and have become a member. Some of the conflicting negative thoughts just seem to dissipate once I write them down; it's different from just recording audio. Overall, Shanshan is really nice!"
+        "title": "Record with your watch and get meeting minutes instantly",
+        "content": "I found that it works perfectly with Apple Watch—you can record anytime and transcribe later, and the meeting notes are generated automatically. You can even see what each speaker said, get AI summaries, and ask about specific meeting details. It truly frees your hands!"
       },
       {
-        "title": "Ready to use right away, a great assistant for creativity!",
-        "content": "I'm a student from opera department and usually need to record many improvised movements. This real-time recording feature will definitely be very convenient for me!"
+        "title": "The speech recognition is incredible!",
+        "content": "It offers high accuracy, lets you replay audio sentence by sentence with text, recognizes speakers and supports many other languages, and can translate too. It’s one of the most complete voice recognition tools out there. The experience is also super convenient—supports shortcuts, mini-programs, Siri, and transcribing from watch recordings."
       },
       {
-        "title": "User-friendly, excellent experience!",
-        "content": "I am a teacher and often need to record classroom discussions. This tool allows me to quickly capture students' insights, with a clean interface and simple operation, making it perfect for my needs!"
+        "title": "Perfect tool for capturing ideas on the go",
+        "content": "Finally, I can record my thoughts securely during walks or runs—even without bringing my phone! It also supports sharing to platforms like Notion, Obsidian, and iPhone Notes. The built-in AI turns your input into key credits and to-dos, sets reminders, and helps you close the loop."
+      },
+      {
+        "title": "Helps me turn ideas into action quickly",
+        "content": "After converting voice to text, the AI handles the structuring—no need to tag, trim, or format manually. Even better, it helps expand my thoughts. I often use it to explore abstract ideas with AI, and ideaShell does this really well with built-in prompts tailored to different scenarios."
+      },
+      {
+        "title": "Recording ward round information is truly useful",
+        "content": "Every morning during ward rounds, I hold the medical chart while listening to the senior doctor explain the case—there’s just too much info to write by hand. With Apple Watch, a quick double pinch lets me record instantly and convert it into to-dos. Patient conditions, pre-op prep, key notes from the round—all clearly organized."
+      },
+      {
+        "title": "A must-have for recording your thoughts while walking",
+        "content": "I love using voice notes to help sort through my emotions. After transcribing to text, I can continue the conversation with AI—it often reveals perspectives I hadn’t even considered. By writing and speaking continuously, my thoughts flow and clear out, making space for new ideas and fresh energy to enter my life."
+      },
+      {
+        "title": "Even if the teacher speaks too fast, I can still capture everything",
+        "content": "Sometimes the teacher explains important concepts but erases the board right after—there’s no time to take notes. I usually just start recording and let the AI generate a full summary of the key credits. It’s often way more convenient than handwriting!"
+      },
+      {
+        "title": "It fits perfectly into my note-taking workflow",
+        "content": "Recording reminds me of using an old-school tape recorder, but the voice turns into text almost instantly. It even auto-generates tags for me—no need to type them manually. There are also built-in prompts that let me turn notes into weekly reports, emails, work summaries, or even social posts with one click. Plus, I can share everything to Notion. I used to type everything on my phone. Now with ideaShell, capturing ideas is so much faster."
       }
     ]
   }

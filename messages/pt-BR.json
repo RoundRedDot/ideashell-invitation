@@ -42,16 +42,36 @@
     "countDescriptionGlobal": "*Pontuação geral global, com variações exibidas por região.",
     "items": [
       {
-        "title": "Escrever é terapêutico, Shanshan é incrível!",
-        "content": "Depois de usar por alguns dias, me senti ótimo e me tornei membro. Alguns pensamentos negativos desaparecem quando os escrevo — é diferente de apenas gravar áudio. Shanshan é realmente ótima!"
+        "title": "Grave com o relógio e gere atas de reunião automaticamente",
+        "content": "Descobri que é possível usar com o Apple Watch — você pode gravar a qualquer momento e depois transcrever, e a ata da reunião já sai pronta. Também dá para ver diretamente o que cada participante disse, usar IA para resumir e até perguntar detalhes específicos da fala. Realmente deixa as mãos livres!"
       },
       {
-        "title": "Pronta para usar, ótima para criatividade!",
-        "content": "Sou estudante de ópera e preciso gravar muitos movimentos improvisados. Esse recurso de gravação em tempo real é muito conveniente para mim!"
+        "title": "A função de reconhecimento de voz com IA é super completa!",
+        "content": "O reconhecimento tem alta precisão e permite ouvir frase por frase com o texto correspondente. Consegue identificar os diferentes interlocutores, suporta vários idiomas e oferece tradução com comparação bilíngue. É uma das ferramentas mais completas de reconhecimento de voz disponíveis. A operação também é muito prática — com atalhos, miniaplicativos, integração com Siri e transcrição de gravações feitas pelo relógio."
       },
       {
-        "title": "Fácil de usar, experiência excelente!",
-        "content": "Sou professor e preciso gravar discussões em sala de aula. Esta ferramenta me permite capturar rapidamente as ideias dos alunos, com uma interface limpa e simples. Perfeita para minhas necessidades!"
+        "title": "Solução perfeita para registrar ideias fora de casa",
+        "content": "Finalmente posso registrar inspirações com segurança durante caminhadas ou corridas, mesmo sem levar o celular! Também é possível compartilhar com Notion, Obsidian e Notas do iPhone. A IA integrada transforma o conteúdo em tópicos e tarefas, define lembretes e fecha o ciclo de produtividade."
+      },
+      {
+        "title": "Me ajuda a transformar ideias em ação rapidamente",
+        "content": "Depois de converter a voz em texto, a IA organiza tudo — sem precisar adicionar tags, cortar trechos ou ajustar o formato. O melhor é que ela também ajuda a expandir as ideias. Costumo discutir ideias abstratas com a IA, e nesse créditos, o ideaShell oferece uma ótima experiência com prompts integrados para diferentes cenários."
+      },
+      {
+        "title": "Registrar informações da visita médica é realmente útil",
+        "content": "Toda manhã, durante a visita, estou com o prontuário na mão ouvindo o médico sênior explicar o caso — é tanta informação que não dá tempo de anotar tudo. Com o Apple Watch, um simples duplo toque já grava e transforma em tarefas. Condição do paciente, preparo pré-operatório e créditos-chave da visita ficam organizados e fáceis de acessar."
+      },
+      {
+        "title": "Essencial para registrar pensamentos durante caminhadas",
+        "content": "Gosto de usar a gravação de voz para organizar minhas emoções. Depois que vira texto, posso continuar conversando com a IA, que muitas vezes traz perspectivas que eu nunca tinha considerado. Escrevendo e falando sem parar, deixo as ideias fluírem, se esvaziarem e abro espaço para que novos pensamentos e novos estados entrem na minha vida."
+      },
+      {
+        "title": "Mesmo que o professor fale muito rápido, consigo registrar tudo",
+        "content": "Às vezes o professor explica algo importante e logo apaga o quadro, sem tempo para anotar. Eu costumo gravar direto e deixar a IA resumir todos os créditos principais. Muitas vezes é bem mais prático do que escrever à mão!"
+      },
+      {
+        "title": "Se encaixa perfeitamente no meu fluxo de anotações",
+        "content": "Gravar me lembra os antigos gravadores de fita, mas aqui o áudio vira texto rapidinho. Ainda por cima, ele gera etiquetas automaticamente — sem precisar digitar nada. Há prompts prontos que transformam as anotações em relatórios semanais, e-mails, resumos de trabalho ou até posts para redes sociais com um clique. Também dá pra compartilhar direto no Notion. Antes eu sempre digitava no celular. Agora, com o ideaShell, registrar ideias ficou muito mais rápido."
       }
     ]
   }

@@ -42,16 +42,36 @@
     "countDescriptionGlobal": "*Gesamtbewertung weltweit, mit regionalen Unterschieden dargestellt.",
     "items": [
       {
-        "title": "Tagebuchschreiben heilt, Shanshan ist großartig!",
-        "content": "Nach ein paar Tagen Nutzung fühle ich mich großartig und bin Mitglied geworden. Einige widersprüchliche, negative Gedanken verschwinden einfach, wenn ich sie aufschreibe – es ist ganz anders als nur eine Audioaufnahme. Insgesamt ist Shanshan wirklich toll!"
+        "title": "Mit der Uhr aufnehmen und automatisch Besprechungsnotizen erstellen",
+        "content": "Ich habe entdeckt, dass man es mit der Apple Watch nutzen kann – jederzeit aufnehmen und danach transkribieren. Die Besprechungsnotizen werden direkt generiert. Man kann sogar die Beiträge der einzelnen Sprecher sehen, per KI zusammenfassen und gezielt Fragen dazu stellen. Wirklich eine enorme Arbeitserleichterung!"
       },
       {
-        "title": "Sofort einsatzbereit, toll für Kreativität!",
-        "content": "Ich bin Opernstudent und muss oft improvisierte Bewegungen aufzeichnen. Diese Echtzeit-Aufnahmefunktion ist wirklich praktisch für mich!"
+        "title": "Die KI-Spracherkennung ist äußerst umfassend!",
+        "content": "Die Erkennungsgenauigkeit ist sehr hoch, man kann Satz für Satz im Text mitverfolgen. Es erkennt Sprecher und unterstützt mehrere Sprachen mit zweisprachiger Übersetzung. Eine der vollständigsten Lösungen im Bereich Spracherkennung. Die Bedienung ist ebenfalls einfach – mit Kurzbefehlen, Mini-Apps, Siri und Transkription über die Smartwatch."
       },
       {
-        "title": "Benutzerfreundlich, tolle Erfahrung!",
-        "content": "Ich bin Lehrer und muss häufig Klassendiskussionen aufnehmen. Dieses Tool ermöglicht es mir, schnell die Gedanken der Schüler festzuhalten, mit einer klaren Oberfläche und einfacher Bedienung – perfekt für meine Bedürfnisse!"
+        "title": "Die perfekte Lösung für Notizen unterwegs",
+        "content": "Endlich kann ich beim Spazieren oder Joggen sicher Ideen festhalten – sogar ohne Handy. Unterstützt die Weitergabe an Notion, Obsidian und die iPhone-Notizen. Die integrierte KI wandelt Eingaben in Schlüsselpunkte und Aufgaben um, setzt Erinnerungen und schafft einen vollständigen Workflow."
+      },
+      {
+        "title": "Hilft mir, Ideen schnell umzusetzen",
+        "content": "Nach der Sprach-zu-Text-Umwandlung übernimmt die KI die Strukturierung – ganz ohne manuelles Taggen, Kürzen oder Formatieren. Noch besser: Sie hilft mir dabei, Gedanken weiterzuentwickeln. Ich diskutiere oft abstrakte Ideen mit der KI, und genau in diesem Bereich bietet ideaShell eine tolle Erfahrung – mit integrierten Prompts für verschiedene Anwendungsszenarien zur Auswahl."
+      },
+      {
+        "title": "Perfekt zur Dokumentation von Visiten",
+        "content": "Jeden Morgen bei der Visite halte ich die Patientenakte und höre dem Oberarzt zu – es ist zu viel, um alles mitzuschreiben. Mit der Apple Watch reicht ein doppeltes Tippen, um sofort aufzunehmen und alles in To-dos umzuwandeln: Patientenzustand, OP-Vorbereitung, Visitenpunkte – alles klar ersichtlich."
+      },
+      {
+        "title": "Unverzichtbar für Gedankennotizen beim Spazierengehen",
+        "content": "Ich liebe es, mit Sprachaufnahmen meine Gefühle zu ordnen. Nach der Transkription kann ich mit der KI weiterreden – sie zeigt mir oft Perspektiven, an die ich nicht gedacht hätte. Ständiges Schreiben und Reden lässt Gedanken fließen und loslassen, sodass neue Ideen und Zustände ins Leben kommen."
+      },
+      {
+        "title": "Auch wenn der Lehrer zu schnell spricht, wird alles erfasst",
+        "content": "Manchmal erklärt der Lehrer wichtige Inhalte und löscht sofort die Tafel – keine Zeit für handschriftliche Notizen. Ich starte einfach die Aufnahme und lasse die KI eine vollständige Zusammenfassung der Kernaussagen erstellen. Viel praktischer als handschriftliches Mitschreiben!"
+      },
+      {
+        "title": "Perfekt für meinen Notiz-Workflow",
+        "content": "Beim Aufnehmen denke ich an alte Kassettenrekorder – aber die Sprache wird sofort in Text umgewandelt. Tags werden automatisch erstellt, ich muss nichts eintippen. Es gibt vorgefertigte Prompts, mit denen sich Notizen in Wochenberichte, E-Mails, Zusammenfassungen oder Posts umwandeln lassen – und alles lässt sich nach Notion exportieren. Früher habe ich alles getippt – jetzt geht’s mit ideaShell viel schneller."
       }
     ]
   }

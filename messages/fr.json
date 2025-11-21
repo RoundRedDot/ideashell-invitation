@@ -42,16 +42,36 @@
     "countDescriptionGlobal": "*Note globale dans le monde, avec les variations affichées par région.",
     "items": [
       {
-        "title": "Tenir un journal est thérapeutique, Shanshan est incroyable !",
-        "content": "Après quelques jours d'utilisation, je me sens très bien et je suis devenu membre. Certains sentiments négatifs disparaissent simplement en les écrivant ; c'est différent de l'enregistrement audio. Globalement, Shanshan est vraiment géniale !"
+        "title": "Enregistrez avec votre montre et obtenez automatiquement le compte-rendu de réunion",
+        "content": "J’ai découvert qu’on peut l’utiliser avec l’Apple Watch pour enregistrer à tout moment, puis transcrire. Le compte-rendu est généré automatiquement. On peut même voir les interventions de chaque participant, obtenir un résumé par l’IA, et poser des questions sur les détails de la réunion. C’est vraiment un gain de liberté pour les mains !"
       },
       {
-        "title": "Prête à l'emploi, une excellente aide à la créativité !",
-        "content": "Je suis étudiant en opéra et j'ai souvent besoin d'enregistrer des mouvements improvisés. Cette fonction d'enregistrement en temps réel est très pratique pour moi !"
+        "title": "Les fonctionnalités de reconnaissance vocale par IA sont ultra complètes !",
+        "content": "La reconnaissance est très précise, avec la possibilité d’écouter phrase par phrase en suivant le texte. Elle reconnaît les intervenants, prend en charge plusieurs langues, et peut aussi traduire. C’est l’une des solutions les plus abouties en matière de reconnaissance vocale. L’utilisation est aussi très simple : raccourcis, mini-apps, Siri, et transcription depuis la montre connectée."
       },
       {
-        "title": "Facile à utiliser, expérience excellente !",
-        "content": "Je suis enseignant et j'enregistre souvent les discussions en classe. Cet outil me permet de capturer rapidement les idées des élèves, avec une interface claire et une utilisation simple — parfait pour mes besoins !"
+        "title": "La solution parfaite pour prendre des notes en déplacement",
+        "content": "Je peux enfin enregistrer mes idées en toute sérénité pendant une promenade ou un footing, même sans téléphone ! Il est également possible de partager sur Notion, Obsidian ou Notes d’iPhone. L’IA intégrée transforme le contenu en crédits clés et tâches, définit des rappels et boucle le processus."
+      },
+      {
+        "title": "M’aide à concrétiser mes idées rapidement",
+        "content": "Après la conversion de la voix en texte, l’IA se charge de tout structurer, sans avoir besoin d’ajouter des tags ou de modifier le format. Encore mieux, elle m’aide à approfondir mes idées. J’échange souvent avec l’IA sur des concepts abstraits, et de ce point de vue, l’expérience avec ideaShell est vraiment réussie, grâce à ses prompts adaptés à différents contextes."
+      },
+      {
+        "title": "Enregistrer les informations de la visite médicale est vraiment pratique",
+        "content": "Chaque matin lors de la visite, je tiens le dossier du patient tout en écoutant le médecin senior expliquer le cas — il y a tellement d’informations qu’il est impossible de tout écrire à la main. Avec l’Apple Watch, une double pression suffit pour lancer un enregistrement et le transformer en tâches à faire. L’état du patient, la préparation préopératoire et les crédits clés sont tous clairement organisés."
+      },
+      {
+        "title": "Indispensable pour noter ses pensées en marchant",
+        "content": "J’aime enregistrer ma voix pour clarifier mes émotions. Une fois le texte transcrit, je continue à discuter avec l’IA, qui me propose souvent des crédits de vue auxquels je n’avais pas pensé. En écrivant et en parlant continuellement, mes idées circulent et se libèrent, laissant place à de nouvelles pensées et à une nouvelle énergie dans ma vie."
+      },
+      {
+        "title": "Même si le professeur parle trop vite, je peux tout noter",
+        "content": "Parfois, le professeur explique des crédits importants, puis efface le tableau aussitôt, sans laisser le temps de prendre des notes. J’enregistre simplement et laisse l’IA générer un résumé complet. C’est souvent bien plus pratique que d’écrire à la main !"
+      },
+      {
+        "title": "Parfaitement adapté à mon flux de prise de notes",
+        "content": "L’enregistrement me rappelle les anciens dictaphones, mais ici, la voix est transformée en texte en un rien de temps. Il crée même automatiquement des étiquettes, sans que j’aie à les taper moi-même. L’application propose des prompts prédéfinis pour transformer les notes en rapports hebdomadaires, e-mails, bilans de travail ou publications sur les réseaux sociaux, le tout partageable sur Notion. Avant, je tapais tout sur mon téléphone. Aujourd’hui, avec ideaShell, c’est bien plus rapide de tout enregistrer."
       }
     ]
   }
