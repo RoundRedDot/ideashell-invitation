@@ -15,7 +15,27 @@ const geistMono = Geist_Mono({
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var ua = window.navigator.userAgent;
+                  // 替换成你们 App 的特定标识
+                  if (ua.indexOf('ideaShell') > -1) {
+                    document.documentElement.classList.add('is-webview');
+                  }
+                  if (/iPhone|iPad|iPod/i.test(ua)) {
+                    document.documentElement.classList.add('is-ios');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
     </html>
   );

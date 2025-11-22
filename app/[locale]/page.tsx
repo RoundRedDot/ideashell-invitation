@@ -2,7 +2,6 @@ import { InvitationCard } from "@/components/invitation/InvitationCard";
 import { ImageCarousel } from "@/components/invitation/ImageCarousel";
 import { ReviewsSection } from "@/components/invitation/ReviewsSection";
 import { AppDownloadHeader } from "@/components/invitation/AppDownloadHeader";
-import { ConditionalWrapper } from "@/components/invitation/ConditionalWrapper";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import LanguageSelector from "@/components/LanguageSelector";
 import { locales } from "@/i18n/config";
@@ -20,9 +19,7 @@ export default async function Home({ params }: PageProps) {
     <div className="min-h-screen bg-[#f4f4f4] overflow-x-hidden">
       <div className="mx-auto w-full max-w-[402px] lg:max-w-[428px] min-h-screen bg-[#f4f4f4]">
         <div className="flex flex-col gap-6 p-6 pb-[300px]">
-          <ConditionalWrapper headerSide>
-            <AppDownloadHeader />
-          </ConditionalWrapper>
+          <AppDownloadHeader />
           <div className="flex flex-col gap-1">
             <div className="flex flex-col">
               <span className="text-stone-900 text-3xl font-extrabold leading-10">{t("hero.title")}</span>
@@ -51,9 +48,7 @@ export default async function Home({ params }: PageProps) {
         </div>
       </div>
 
-      <ConditionalWrapper>
-        <InvitationCard />
-      </ConditionalWrapper>
+      <InvitationCard />
     </div>
   );
 }

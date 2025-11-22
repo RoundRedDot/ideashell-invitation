@@ -2,6 +2,9 @@
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
+@custom-variant webview (.is-webview &);
+@custom-variant ios (.is-ios &);
+@custom-variant ios-webview (.is-webview.is-ios &);
 
 @theme inline {
   --color-background: var(--background);

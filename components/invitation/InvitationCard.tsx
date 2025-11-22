@@ -318,7 +318,7 @@ export const InvitationCard: React.FC<InvitationCardProps> = ({ invitationCode =
   return (
     <div
       ref={containerRef}
-      className={`fixed bottom-4 z-50 flex justify-center ${className}`}
+      className={`webview:hidden fixed bottom-4 z-50 flex justify-center ${className}`}
       style={{
         maxWidth: "428px",
         width: "calc(100% - 32px)",
