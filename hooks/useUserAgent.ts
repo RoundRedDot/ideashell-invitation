@@ -45,6 +45,7 @@ export function useUserAgent(userAgentString?: string): UAInfo | undefined {
  * @returns Object with WebView detection status and UA info
  */
 export function useIdeaShellDetection(userAgentString?: string): {
+  isCN: boolean;
   isIdeaShell: boolean;
   isLoading: boolean;
   uaInfo?: UAInfo;
@@ -59,6 +60,7 @@ export function useIdeaShellDetection(userAgentString?: string): {
   }, [uaInfo]);
 
   return {
+    isCN: uaInfo?.isCN ?? false,
     isIdeaShell: uaInfo?.isIdeaShell ?? false,
     isLoading,
     uaInfo,

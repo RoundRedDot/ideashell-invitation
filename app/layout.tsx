@@ -23,12 +23,32 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               (function() {
                 try {
                   var ua = window.navigator.userAgent;
-                  if (ua.indexOf('ideaShell') > -1) {
-                    document.documentElement.setAttribute('data-webview', 'true');
+                  var docEl = document.documentElement;
+                  var isWebview = ua.indexOf('ideaShell') > -1;
+                  var isIos = /iPhone|iPad|iPod/i.test(ua);
+                  
+                  if (!isWebview && !isIos) return;
+
+                  function setAttributes() {
+                    if (isWebview && !docEl.hasAttribute('data-webview')) {
+                      docEl.setAttribute('data-webview', 'true');
+                    }
+                    if (isIos && !docEl.hasAttribute('data-ios')) {
+                      docEl.setAttribute('data-ios', 'true');
+                    }
                   }
-                  if (/iPhone|iPad|iPod/i.test(ua)) {
-                    document.documentElement.setAttribute('data-ios', 'true');
-                  }
+
+                  setAttributes();
+
+                  var observer = new MutationObserver(function(mutations) {
+                    setAttributes();
+                  });
+
+                  observer.observe(docEl, { 
+                    attributes: true, 
+                    subtree: false, 
+                    childList: false 
+                  });
                 } catch (e) {}
               })();
             `,

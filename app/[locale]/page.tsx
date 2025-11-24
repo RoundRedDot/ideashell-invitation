@@ -5,6 +5,7 @@ import { AppDownloadHeader } from "@/components/invitation/AppDownloadHeader";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import LanguageSelector from "@/components/LanguageSelector";
 import { locales } from "@/i18n/config";
+import BottomSlogan from "@/components/invitation/BottomSlogan";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -33,8 +34,8 @@ export default async function Home({ params }: PageProps) {
           <div className="flex flex-col gap-2 text-[13px]">
             <div className="text-[#808080]">
               <p className="leading-normal">
-                <span className="font-normal">{t("footer.copyright")}</span>
-                <span className="font-bold">{t("footer.company")}</span>
+                <span className="font-normal">All rights reserved. </span>
+                <BottomSlogan />
               </p>
             </div>
             <div className="text-[#8d8d8d]">

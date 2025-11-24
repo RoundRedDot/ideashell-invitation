@@ -5,6 +5,11 @@
 
 export interface UAInfo {
   /**
+   * Whether this is an ideaShell WebView in China
+   */
+  isCN: boolean;
+
+  /**
    * Whether this is an ideaShell WebView
    */
   isIdeaShell: boolean;
@@ -113,6 +118,7 @@ export class UAParser {
    */
   public parse(ua: string): UAInfo {
     const info: UAInfo = {
+      isCN: false,
       isIdeaShell: false,
       isWeChat: false,
       platform: 'unknown',
@@ -122,6 +128,7 @@ export class UAParser {
     // Check if it's an ideaShell WebView
     const ideaShellMatch = ua.match(UAParser.PATTERNS.ideaShell);
     if (ideaShellMatch) {
+      info.isCN = ideaShellMatch[0].includes('CN');
       info.isIdeaShell = true;
       info.appVersion = ideaShellMatch[1];
       info.buildNumber = ideaShellMatch[2];
