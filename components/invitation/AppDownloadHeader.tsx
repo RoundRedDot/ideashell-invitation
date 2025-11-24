@@ -8,8 +8,8 @@ export const AppDownloadHeader = async () => {
 
   return (
     <>
-      <div className="hidden ios-webview:block h-[calc(env(safe-area-inset-top) - 16px)]"></div>
-      <div className="webview:hidden flex items-center justify-between w-full ios-webview:pt-[calc(env(safe-area-inset-top) - 16px)]">
+      <div className="hidden ios-webview:block h-[60px]"></div>
+      <div className="webview:hidden flex items-center justify-between w-full">
         <div className="flex items-center gap-2">
           <div className="w-12 h-12 overflow-hidden">
             <Image src={getAssetPath("/ideashell.png")} width={48} height={48} alt="ideaShell" className="w-full h-full object-cover" />
