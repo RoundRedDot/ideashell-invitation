@@ -23,12 +23,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               (function() {
                 try {
                   var ua = window.navigator.userAgent;
-                  // 替换成你们 App 的特定标识
                   if (ua.indexOf('ideaShell') > -1) {
-                    document.documentElement.classList.add('is-webview');
+                    document.documentElement.setAttribute('data-webview', 'true');
                   }
                   if (/iPhone|iPad|iPod/i.test(ua)) {
-                    document.documentElement.classList.add('is-ios');
+                    document.documentElement.setAttribute('data-ios', 'true');
                   }
                 } catch (e) {}
               })();
