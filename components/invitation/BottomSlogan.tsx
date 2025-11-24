@@ -1,10 +1,7 @@
 "use client";
 
-import { useIdeaShellDetection } from "@/hooks/useUserAgent";
-
 const BottomSlogan = () => {
-  const { isCN } = useIdeaShellDetection();
-
+  const isCN = process.env.NEXT_PUBLIC_APP_DEEPLINK_URL?.includes('cn');
   return <span className="font-bold">{isCN ? "RoundRedDot Tech Co., Ltd." : "RoundRedDot Inc."}</span>;
 };
 
