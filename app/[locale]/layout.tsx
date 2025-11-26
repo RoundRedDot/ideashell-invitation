@@ -6,7 +6,6 @@ import { Toaster } from "@/components/ui/sonner";
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
 
-  // Metadata for all supported languages
   const metadata = {
     en: {
       title: "ideaShell - AI Voice Notes for Everything That Matters",
@@ -17,58 +16,58 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       ogDescription: "Join ideaShell and receive 100,000 AI Credits!",
     },
     "zh-CN": {
-      title: "ideaShell - 一切重要事项的AI语音笔记",
-      description: "加入 ideaShell，获得 100,000 AI 点数！拥有 10,000+ 五星好评的 #1 AI 语音笔记应用。适用于会议、想法、日记、学习和思考。",
-      keywords: "AI语音笔记, 语音录制, 会议笔记, 日记应用, 学习笔记, ideaShell",
-      ogTitle: "ideaShell - AI语音笔记",
-      ogDescription: "加入 ideaShell，获得 100,000 AI 点数！",
+      title: "闪念贝壳 - 帮你记住所有重要事儿的 AI 语音笔记",
+      description: "加入闪念贝壳，领取 100,000 AI 积分！10,000+ 条五星好评的 AI 语音笔记应用。适用于会议、想法、日记、学习和思考。",
+      keywords: "AI 语音笔记, 语音记录, 会议记录, 日记应用, 学习笔记, 闪念贝壳",
+      ogTitle: "闪念贝壳 - AI 语音笔记",
+      ogDescription: "加入闪念贝壳，领取 100,000 AI 积分！",
     },
     "zh-TW": {
-      title: "ideaShell - 一切重要事項的AI語音筆記",
-      description: "加入 ideaShell，獲得 100,000 AI 積分！擁有 10,000+ 五星評價的 #1 AI 語音筆記應用。適用於會議、想法、日記、學習和思考。",
-      keywords: "AI語音筆記, 語音錄製, 會議筆記, 日記應用, 學習筆記, ideaShell",
-      ogTitle: "ideaShell - AI語音筆記",
-      ogDescription: "加入 ideaShell，獲得 100,000 AI 積分！",
+      title: "閃念貝殼 - 幫你記住所有重要事情的 AI 語音筆記",
+      description: "加入閃念貝殼，領取 100,000 AI 積分！超過 10,000 則五星好評的 AI 語音筆記應用。適用於會議、想法、日記、學習與思考。",
+      keywords: "AI 語音筆記, 語音記錄, 會議筆記, 日記應用, 學習筆記, 閃念貝殼",
+      ogTitle: "閃念貝殼 - AI 語音筆記",
+      ogDescription: "加入閃念貝殼，領取 100,000 AI 積分！",
     },
     ja: {
-      title: "ideaShell - 大切なすべてのためのAIボイスノート",
+      title: "ideaShell - 大切なことをすべて記録するAI音声ノート",
       description:
-        "ideaShellに参加して100,000 AIクレジットを受け取りましょう！10,000以上の5つ星レビューを誇る#1 AIボイスノートアプリ。会議、アイデア、日記、学習、思考に最適です。",
-      keywords: "AIボイスノート, 音声録音, 会議メモ, 日記アプリ, 学習ノート, ideaShell",
-      ogTitle: "ideaShell - AIボイスノート",
-      ogDescription: "ideaShellに参加して100,000 AIクレジットを受け取りましょう！",
-    },
-    es: {
-      title: "ideaShell - Notas de Voz con IA para Todo lo que Importa",
-      description:
-        "¡Únete a ideaShell y recibe 100,000 Créditos de IA! La aplicación #1 de notas de voz con IA con más de 10,000 reseñas de 5 estrellas. Perfecta para reuniones, ideas, diarios, estudio y pensamientos.",
-      keywords: "notas de voz con IA, grabación de voz, notas de reuniones, aplicación de diario, notas de estudio, ideaShell",
-      ogTitle: "ideaShell - Notas de Voz con IA",
-      ogDescription: "¡Únete a ideaShell y recibe 100,000 Créditos de IA!",
-    },
-    "pt-BR": {
-      title: "ideaShell - Notas de Voz com IA para Tudo o que Importa",
-      description:
-        "Junte-se ao ideaShell e receba 100.000 Créditos de IA! O aplicativo #1 de notas de voz com IA com mais de 10.000 avaliações 5 estrelas. Perfeito para reuniões, ideias, diários, estudos e pensamentos.",
-      keywords: "notas de voz com IA, gravação de voz, notas de reunião, aplicativo de diário, notas de estudo, ideaShell",
-      ogTitle: "ideaShell - Notas de Voz com IA",
-      ogDescription: "Junte-se ao ideaShell e receba 100.000 Créditos de IA!",
+        "ideaShellに参加して、100,000 AIクレジットを受け取ろう！10,000件以上の★5レビューを獲得したNo.1 AI音声ノートアプリ。会議、アイデア、日記、勉強、思考に最適。",
+      keywords: "AI音声ノート, 音声録音, 会議メモ, 日記アプリ, 勉強ノート, ideaShell",
+      ogTitle: "ideaShell - AI音声ノート",
+      ogDescription: "ideaShellに参加して、100,000 AIクレジットをゲットしよう！",
     },
     fr: {
-      title: "ideaShell - Notes Vocales IA pour Tout ce qui Compte",
+      title: "ideaShell - Notes vocales IA pour tout ce qui compte vraiment",
       description:
-        "Rejoignez ideaShell et recevez 100 000 Crédits IA ! L'application #1 de notes vocales IA avec plus de 10 000 avis 5 étoiles. Parfaite pour les réunions, les idées, les journaux, les études et les pensées.",
-      keywords: "notes vocales IA, enregistrement vocal, notes de réunion, application journal, notes d'étude, ideaShell",
-      ogTitle: "ideaShell - Notes Vocales IA",
-      ogDescription: "Rejoignez ideaShell et recevez 100 000 Crédits IA !",
+        "Rejoignez ideaShell et recevez 100 000 crédits IA ! L’application #1 de notes vocales IA avec plus de 10 000 avis 5 étoiles. Parfaite pour les réunions, idées, journaux, études et réflexions.",
+      keywords: "notes vocales IA, enregistrement vocal, notes de réunion, application de journal, notes d'étude, ideaShell",
+      ogTitle: "ideaShell - Notes vocales IA",
+      ogDescription: "Rejoignez ideaShell et recevez 100 000 crédits IA !",
+    },
+    es: {
+      title: "ideaShell - Notas de voz con IA para todo lo que realmente importa",
+      description:
+        "Únete a ideaShell y recibe 100,000 créditos de IA. La app #1 de notas de voz con IA con más de 10,000 reseñas de 5 estrellas. Ideal para reuniones, ideas, diarios, estudios y reflexiones.",
+      keywords: "notas de voz IA, grabación de voz, notas de reunión, app de diario, notas de estudio, ideaShell",
+      ogTitle: "ideaShell - Notas de voz IA",
+      ogDescription: "Únete a ideaShell y recibe 100,000 créditos de IA.",
+    },
+    pt: {
+      title: "ideaShell - Notas de voz com IA para tudo o que realmente importa",
+      description:
+        "Junte-se ao ideaShell e ganhe 100.000 créditos de IA! O aplicativo nº 1 de notas de voz com IA com mais de 10.000 avaliações 5 estrelas. Perfeito para reuniões, ideias, diário, estudos e reflexões.",
+      keywords: "notas de voz IA, gravação de voz, notas de reunião, aplicativo de diário, notas de estudo, ideaShell",
+      ogTitle: "ideaShell - Notas de voz com IA",
+      ogDescription: "Junte-se ao ideaShell e ganhe 100.000 créditos de IA!",
     },
     de: {
-      title: "ideaShell - KI-Sprachnotizen für Alles was Zählt",
+      title: "ideaShell – KI-Sprachnotizen für alles, was wirklich zählt",
       description:
-        "Treten Sie ideaShell bei und erhalten Sie 100.000 KI-Credits! Die #1 KI-Sprachnotizen-App mit über 10.000 5-Sterne-Bewertungen. Perfekt für Meetings, Ideen, Tagebücher, Lernen und Gedanken.",
-      keywords: "KI-Sprachnotizen, Sprachaufnahme, Meeting-Notizen, Tagebuch-App, Lernnotizen, ideaShell",
-      ogTitle: "ideaShell - KI-Sprachnotizen",
-      ogDescription: "Treten Sie ideaShell bei und erhalten Sie 100.000 KI-Credits!",
+        "Tritt ideaShell bei und erhalte 100.000 KI-Credits! Die Nr. 1 KI-Sprachnotiz-App mit über 10.000 5-Sterne-Bewertungen. Perfekt für Meetings, Ideen, Tagebuch, Lernen und Gedanken.",
+      keywords: "KI-Sprachnotizen, Sprachaufnahme, Besprechungsnotizen, Tagebuch-App, Lernnotizen, ideaShell",
+      ogTitle: "ideaShell – KI-Sprachnotizen",
+      ogDescription: "Tritt ideaShell bei und erhalte 100.000 KI-Credits!",
     },
   };
 

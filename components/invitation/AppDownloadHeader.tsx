@@ -8,7 +8,7 @@ export const AppDownloadHeader = async () => {
 
   return (
     <>
-      <div className="hidden ios-webview:block h-[60px]"></div>
+      <div className="hidden ios-webview:block h-[70px]"></div>
       <div className="webview:hidden flex items-center justify-between w-full">
         <div className="flex items-center gap-2">
           <div className="w-12 h-12 overflow-hidden">
